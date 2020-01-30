@@ -1,4 +1,4 @@
-class parse {
+class MusicStats {
 	//#region Properties
 	rawJson = null;
 	stringJson: string = null;
@@ -131,6 +131,7 @@ class parse {
 		sortable.sort(function(a, b) {
 			return b[1] - a[1];
 		});
+		sortable.length = 20;
 		this.artistsSorted = sortable;
 	}
 
@@ -143,14 +144,15 @@ class parse {
 		sortable.sort(function(a, b) {
 			return b[2] - a[2];
 		});
+		sortable.length = 25;
 		this.titlesSorted = sortable;
 	}
 	//#endregion
 }
 
-let myActivity = new parse('./My Activity.json', 2019);
+export {MusicStats as default}
 
-console.log(myActivity.artistsSorted);
+// console.log(myActivity.titlesSorted);
 
 /*
  * 

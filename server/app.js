@@ -1,0 +1,16 @@
+"use strict";
+exports.__esModule = true;
+var main_js_1 = require("../main.js");
+var express = require('express');
+// const data = require('../main.js');
+var app = express();
+var port = 3000;
+var myActivity = new main_js_1["default"]('./My Activity.json', 2019);
+app.get('/', function (req, res) { return res.send("The list of options is /topsongs, /topartists, /allartists, /allsongs, /allartistscount, /allsongscount"); });
+app.get('/topsongs', function (req, res) { return res.send(myActivity.titlesSorted); });
+app.get('/topartists', function (req, res) { return res.send(myActivity.artistsSorted); });
+app.get('/allartists', function (req, res) { return res.send(myActivity.uniqueArtists); });
+app.get('/allartistscount', function (req, res) { return res.send(myActivity.uniqueArtists.length.toString()); });
+app.get('/allsongs', function (req, res) { return res.send(myActivity.uniqueTitles); });
+app.get('/allsongscount', function (req, res) { return res.send(myActivity.uniqueTitles.length.toString()); });
+app.listen(port, function () { return console.log("Example app listening on port " + port + "!"); });
