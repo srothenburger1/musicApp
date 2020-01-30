@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "@types/node": "^13.5.1",
+    "xhr2": "^0.2.0",
+    "xmlhttprequest": "^1.8.0"
+  }
+}
