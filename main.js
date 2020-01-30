@@ -1,27 +1,42 @@
 var parse = /** @class */ (function () {
+    // re-enable getters when i figure out the compiler issues. 
+    // public get UniqueTitles() : Array<any> {
+    //     return this.uniqueTitles;
+    // }
+    // public get UniqueArtists() : Array<any> {
+    //     return this.uniqueArtists;
+    // }
+    // public get TitleCount() : Object {
+    //     return this.TitleCount;
+    // }
+    // public get ArtistCount() : Object {
+    //     return this.artistCount;
+    // }
     //#endregion
     //#region Constructors
-    function parse(path) {
+    function parse(path, year) {
         //#region Properties
         this.rawJson = null;
         this.stringJson = null;
         this.uniqueTitles = [];
         this.uniqueArtists = [];
         this.titleCount = {};
-        this.titleCount2 = {};
         this.artistCount = {};
         this.artistsSorted = [];
         this.titlesSorted = [];
-        this.info = new Array;
+        this.data = new Array;
         this.rawJson = this.getJSON(path);
         this.stringJson = JSON.stringify(this.rawJson);
-        this.parseJSON();
+        this.parseJSON(year);
+        this.init();
+    }
+    parse.prototype.init = function () {
         this.sortInfo();
-        this.countTitles();
         this.countArtist();
         this.getArtistsSorted();
-        this.countTitlesIndividually();
-    }
+        this.countTitles();
+        this.getTitlesSorted();
+    };
     //#endregion
     //#region Methods
     parse.prototype.getJSON = function (path) {
@@ -34,19 +49,20 @@ var parse = /** @class */ (function () {
         }
         return result;
     };
-    parse.prototype.parseJSON = function () {
+    parse.prototype.parseJSON = function (year) {
         var _this = this;
+        var yearVar = year.toString();
         this.rawJson.forEach(function (element) {
             if (element.hasOwnProperty('title')) {
-                if (JSON.stringify(element).includes("2020") && JSON.stringify(element).includes("Listened to")) {
-                    _this.info.push({ title: JSON.stringify(element.title).slice(13, -1), artist: element.description });
+                if (JSON.stringify(element).includes(yearVar) && JSON.stringify(element).includes("Listened to")) {
+                    _this.data.push({ title: JSON.stringify(element.title).slice(13, -1), artist: element.description });
                 }
             }
         });
     };
     parse.prototype.sortInfo = function () {
         var _this = this;
-        this.info.forEach(function (item) {
+        this.data.forEach(function (item) {
             if (!_this.uniqueArtists.includes(item.artist)) {
                 _this.uniqueArtists.push(item.artist);
             }
@@ -55,48 +71,45 @@ var parse = /** @class */ (function () {
             }
         });
     };
-    parse.prototype.countTitlesIndividually = function () {
-        var _this = this;
-        this.info.forEach(function (item) {
-            if (!_this.titleCount2.hasOwnProperty(item.title + " ")) {
-                _this.titleCount2[item.title + " "] = {};
-                _this.titleCount2[item.title + " "][item.artist + " "] = 1;
-            }
-            else {
-                _this.titleCount2[item.title + " "][item.artist + " "] += 1;
-            }
-        });
-    };
     parse.prototype.countTitles = function () {
         var _this = this;
-        this.info.forEach(function (item) {
-            // if the title count doesnt have the artist
-            if (!_this.titleCount.hasOwnProperty(item.artist)) {
-                // add the artist and first title
-                _this.titleCount[item.artist] =
-                    {
-                        titles: {}
-                    };
-                _this.titleCount[item.artist].titles[item.title] = 1;
+        this.data.forEach(function (item) {
+            if (!_this.titleCount.hasOwnProperty(item.title + " ")) {
+                _this.titleCount[item.title + " "] = [item.artist + " ", 1];
             }
-            // else if title count -> artist doesnt contain the title
-            else if (!_this.titleCount[item.artist]["titles"].hasOwnProperty(item.title)) {
-                _this.titleCount[item.artist].titles[item.title] = 1;
-            }
-            else if (_this.titleCount[item.artist]["titles"].hasOwnProperty(item.title)) {
-                _this.titleCount[item.artist].titles[item.title] += 1;
+            else {
+                _this.titleCount[item.title + " "][1] += 1;
             }
         });
     };
+    // @deprecated as there is a better way to do this
+    // countTitles(){
+    //     this.info.forEach(item => {
+    //         // if the title count doesnt have the artist
+    //         if(!this.titleCount.hasOwnProperty(item.artist))
+    //         {
+    //             // add the artist and first title
+    //             this.titleCount[item.artist] = 
+    //             {
+    //                 titles: {}
+    //             };              
+    //             this.titleCount[item.artist].titles[item.title] = 1;
+    //         }
+    //         // else if title count -> artist doesnt contain the title
+    //         else if(!this.titleCount[item.artist]["titles"].hasOwnProperty(item.title)){
+    //             this.titleCount[item.artist].titles[item.title] = 1;
+    //         }else if(this.titleCount[item.artist]["titles"].hasOwnProperty(item.title)){
+    //             this.titleCount[item.artist].titles[item.title] += 1;
+    //         }
+    //     })
+    // }
     parse.prototype.countArtist = function () {
         var _this = this;
-        this.info.forEach(function (item) {
-            if (!_this.artistCount.hasOwnProperty(item.artist + " ")) {
-                _this.artistCount[item.artist + " "] = 1;
-            }
-            else {
-                _this.artistCount[item.artist + " "] += 1;
-            }
+        this.data.forEach(function (item) {
+            _this.artistCount[item.artist + " "] =
+                !_this.artistCount.hasOwnProperty(item.artist + " ")
+                    ? 1
+                    : _this.artistCount[item.artist + " "] + 1;
         });
     };
     parse.prototype.getArtistsSorted = function () {
@@ -111,8 +124,8 @@ var parse = /** @class */ (function () {
     };
     parse.prototype.getTitlesSorted = function () {
         var sortable = [];
-        for (var item in this.titleCount2) {
-            sortable.push([item, this.titleCount2[item].key, this.titleCount2[item].value]);
+        for (var item in this.titleCount) {
+            sortable.push([item, this.titleCount[item][0], this.titleCount[item][1]]);
         }
         sortable.sort(function (a, b) {
             return b[2] - a[2];
@@ -121,7 +134,8 @@ var parse = /** @class */ (function () {
     };
     return parse;
 }());
-var obj = new parse('./My Activity.json');
-// console.log(obj.artistCount);
-obj.getTitlesSorted();
-console.log(obj.titlesSorted);
+var myActivity = new parse('./My Activity.json', 2019);
+console.log(myActivity.artistsSorted);
+/*
+ *
+ */ 
