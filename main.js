@@ -1,18 +1,29 @@
 var parse = /** @class */ (function () {
+    //#endregion
+    //#region Constructors
     function parse(path) {
+        //#region Properties
         this.rawJson = null;
         this.stringJson = null;
         this.uniqueTitles = [];
         this.uniqueArtists = [];
         this.titleCount = {};
-        this.artistCount = [];
+        this.titleCount2 = {};
+        this.artistCount = {};
+        this.artistsSorted = [];
+        this.titlesSorted = [];
         this.info = new Array;
         this.rawJson = this.getJSON(path);
         this.stringJson = JSON.stringify(this.rawJson);
         this.parseJSON();
         this.sortInfo();
         this.countTitles();
+        this.countArtist();
+        this.getArtistsSorted();
+        this.countTitlesIndividually();
     }
+    //#endregion
+    //#region Methods
     parse.prototype.getJSON = function (path) {
         var result = null;
         try {
@@ -44,6 +55,18 @@ var parse = /** @class */ (function () {
             }
         });
     };
+    parse.prototype.countTitlesIndividually = function () {
+        var _this = this;
+        this.info.forEach(function (item) {
+            if (!_this.titleCount2.hasOwnProperty(item.title + " ")) {
+                _this.titleCount2[item.title + " "] = {};
+                _this.titleCount2[item.title + " "][item.artist + " "] = 1;
+            }
+            else {
+                _this.titleCount2[item.title + " "][item.artist + " "] += 1;
+            }
+        });
+    };
     parse.prototype.countTitles = function () {
         var _this = this;
         this.info.forEach(function (item) {
@@ -65,7 +88,40 @@ var parse = /** @class */ (function () {
             }
         });
     };
+    parse.prototype.countArtist = function () {
+        var _this = this;
+        this.info.forEach(function (item) {
+            if (!_this.artistCount.hasOwnProperty(item.artist + " ")) {
+                _this.artistCount[item.artist + " "] = 1;
+            }
+            else {
+                _this.artistCount[item.artist + " "] += 1;
+            }
+        });
+    };
+    parse.prototype.getArtistsSorted = function () {
+        var sortable = [];
+        for (var item in this.artistCount) {
+            sortable.push([item, this.artistCount[item]]);
+        }
+        sortable.sort(function (a, b) {
+            return b[1] - a[1];
+        });
+        this.artistsSorted = sortable;
+    };
+    parse.prototype.getTitlesSorted = function () {
+        var sortable = [];
+        for (var item in this.titleCount2) {
+            sortable.push([item, this.titleCount2[item].key, this.titleCount2[item].value]);
+        }
+        sortable.sort(function (a, b) {
+            return b[2] - a[2];
+        });
+        this.titlesSorted = sortable;
+    };
     return parse;
 }());
 var obj = new parse('./My Activity.json');
-console.log(obj.titleCount);
+// console.log(obj.artistCount);
+obj.getTitlesSorted();
+console.log(obj.titlesSorted);

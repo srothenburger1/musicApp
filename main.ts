@@ -1,4 +1,5 @@
 class parse{
+    //#region Properties
     rawJson = null;
     stringJson: string = null;
 
@@ -6,19 +7,31 @@ class parse{
     uniqueArtists = [];
 
     titleCount = {};
-    artistCount = [];
+    titleCount2 = {};
+
+    artistCount = {};
+
+    artistsSorted = [];
+    titlesSorted = [];
 
     info = new Array;
-    
+    //#endregion
+
+    //#region Constructors
     constructor(path:string){
         this.rawJson = this.getJSON(path);
         this.stringJson = JSON.stringify(this.rawJson);
         this.parseJSON();
         this.sortInfo();
-        this.countTitles();        
+        this.countTitles();   
+        this.countArtist();   
+        this.getArtistsSorted();  
+        this.countTitlesIndividually();
     }
+    //#endregion
 
-     getJSON(path: string){
+    //#region Methods
+    getJSON(path: string){
         let result = null;
         try{
              result = require(path);
@@ -47,6 +60,16 @@ class parse{
         })
     }
 
+    countTitlesIndividually(){
+        this.info.forEach(item => {
+            if(!this.titleCount2.hasOwnProperty(`${item.title} `)){
+                this.titleCount2[`${item.title} `] = {};
+                this.titleCount2[`${item.title} `][`${item.artist} `] = 1;
+            }else{
+                this.titleCount2[`${item.title} `][`${item.artist} `] += 1;
+            }
+        })
+    }
     countTitles(){
         this.info.forEach(item => {
             // if the title count doesnt have the artist
@@ -67,11 +90,43 @@ class parse{
             }
         })
     }
-    
+    countArtist(){
+        this.info.forEach(item=>{
+            if(!this.artistCount.hasOwnProperty(`${item.artist} `)){
+                this.artistCount[`${item.artist} `] = 1;
+            }else{
+                this.artistCount[`${item.artist} `] += 1;
+            }
+        })
+    }
+    getArtistsSorted(){
+        var sortable = [];
+        for (var item in this.artistCount) {
+        sortable.push([item, this.artistCount[item]]);
+        }
+
+        sortable.sort(function(a, b) {
+        return b[1] - a[1];
+        });
+        this.artistsSorted = sortable;
+    }
+    getTitlesSorted(){
+        var sortable = [];
+        for (var item in this.titleCount2) {
+            //this needs to push the individual values of the nested object.
+        sortable.push([item, this.titleCount2[item],this.titleCount2[item]]);
+        }
+
+        sortable.sort(function(a, b) {
+        return b[2] - a[2];
+        });
+        this.titlesSorted = sortable;
+    }
+    //#endregion
 }
 
 let obj = new parse('./My Activity.json');
 
-
-
-console.log(obj.titleCount);
+// console.log(obj.artistCount);
+obj.getTitlesSorted();
+console.log(obj.titlesSorted);
