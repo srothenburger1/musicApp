@@ -1,21 +1,13 @@
 import MusicStatsService from "../Services/MusicStatsService.js"
 
-const express = require('express')
-// const data = require('../main.js');
-const app = express();
-const port = 3000
+const express = require('express'),
+app = express(),
+port = 3000,
+bodyParser = require('body-parser');
 
-
-var bodyParser = require('body-parser');
-
-// app.use(bodyParser.json());
-
-//support parsing of application/x-www-form-urlencoded post data
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
-
-let myActivity = MusicStatsService.createObj('../My Activity.json', 2018);
 
 app.get('/', (req, res) => res.send("The list of options is /topsongs, /topartists, /allartists, /allsongs, /allartistscount, /allsongscount"))
 
