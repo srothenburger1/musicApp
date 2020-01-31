@@ -1,4 +1,6 @@
-class MusicStats {
+import {MyActivity} from "../Interfaces/IMyActivity";
+
+class MusicStatsService {
 	//#region Properties
 	rawJson = null;
 	stringJson: string = null;
@@ -39,6 +41,8 @@ class MusicStats {
 		this.stringJson = JSON.stringify(this.rawJson);
 		this.parseJSON(year);
 		this.init();
+
+
 	}
 	init(): void {
 		this.sortInfo();
@@ -46,6 +50,22 @@ class MusicStats {
 		this.getArtistsSorted();
 		this.countTitles();
 		this.getTitlesSorted();
+	}
+
+	static createObj(path:string, year:number){
+		let statsObj = new MusicStatsService(path, year);
+
+		const activity:MyActivity = {
+			uniqueTitles : statsObj.uniqueTitles,
+			uniqueArtists : statsObj.uniqueArtists,
+
+			titleCount : statsObj.titleCount,
+			artistCount : statsObj.artistCount,
+
+			artistsSorted : statsObj.artistsSorted,
+			titlesSorted : statsObj.titlesSorted
+		};
+		return activity;
 	}
 	//#endregion
 
@@ -150,10 +170,4 @@ class MusicStats {
 	//#endregion
 }
 
-export {MusicStats as default}
-
-// console.log(myActivity.titlesSorted);
-
-/*
- * 
- */
+export {MusicStatsService as default}

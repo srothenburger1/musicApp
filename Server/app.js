@@ -1,11 +1,11 @@
 "use strict";
 exports.__esModule = true;
-var main_js_1 = require("../main.js");
+var MusicStatsService_js_1 = require("../Services/MusicStatsService.js");
 var express = require('express');
 // const data = require('../main.js');
 var app = express();
 var port = 3000;
-var myActivity = new main_js_1["default"]('./My Activity.json', 2019);
+var myActivity = MusicStatsService_js_1["default"].createObj('../My Activity.json', 2018);
 app.get('/', function (req, res) { return res.send("The list of options is /topsongs, /topartists, /allartists, /allsongs, /allartistscount, /allsongscount"); });
 app.get('/topsongs', function (req, res) { return res.send(myActivity.titlesSorted); });
 app.get('/topartists', function (req, res) { return res.send(myActivity.artistsSorted); });

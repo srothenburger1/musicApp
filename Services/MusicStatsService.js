@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-var MusicStats = /** @class */ (function () {
+var MusicStatsService = /** @class */ (function () {
     // re-enable getters when i figure out the compiler issues.
     // public get UniqueTitles() : Array<any> {
     //     return this.uniqueTitles;
@@ -16,7 +16,7 @@ var MusicStats = /** @class */ (function () {
     // }
     //#endregion
     //#region Constructors
-    function MusicStats(path, year) {
+    function MusicStatsService(path, year) {
         //#region Properties
         this.rawJson = null;
         this.stringJson = null;
@@ -32,16 +32,28 @@ var MusicStats = /** @class */ (function () {
         this.parseJSON(year);
         this.init();
     }
-    MusicStats.prototype.init = function () {
+    MusicStatsService.prototype.init = function () {
         this.sortInfo();
         this.countArtist();
         this.getArtistsSorted();
         this.countTitles();
         this.getTitlesSorted();
     };
+    MusicStatsService.createObj = function (path, year) {
+        var statsObj = new MusicStatsService(path, year);
+        var activity = {
+            uniqueTitles: statsObj.uniqueTitles,
+            uniqueArtists: statsObj.uniqueArtists,
+            titleCount: statsObj.titleCount,
+            artistCount: statsObj.artistCount,
+            artistsSorted: statsObj.artistsSorted,
+            titlesSorted: statsObj.titlesSorted
+        };
+        return activity;
+    };
     //#endregion
     //#region Methods
-    MusicStats.prototype.getJSON = function (path) {
+    MusicStatsService.prototype.getJSON = function (path) {
         var result = null;
         try {
             result = require(path);
@@ -51,7 +63,7 @@ var MusicStats = /** @class */ (function () {
         }
         return result;
     };
-    MusicStats.prototype.parseJSON = function (year) {
+    MusicStatsService.prototype.parseJSON = function (year) {
         var _this = this;
         var yearVar = year.toString();
         this.rawJson.forEach(function (element) {
@@ -62,7 +74,7 @@ var MusicStats = /** @class */ (function () {
             }
         });
     };
-    MusicStats.prototype.sortInfo = function () {
+    MusicStatsService.prototype.sortInfo = function () {
         var _this = this;
         this.data.forEach(function (item) {
             if (!_this.uniqueArtists.includes(item.artist)) {
@@ -73,7 +85,7 @@ var MusicStats = /** @class */ (function () {
             }
         });
     };
-    MusicStats.prototype.countTitles = function () {
+    MusicStatsService.prototype.countTitles = function () {
         var _this = this;
         this.data.forEach(function (item) {
             if (!_this.titleCount.hasOwnProperty(item.title + " ")) {
@@ -105,7 +117,7 @@ var MusicStats = /** @class */ (function () {
     //         }
     //     })
     // }
-    MusicStats.prototype.countArtist = function () {
+    MusicStatsService.prototype.countArtist = function () {
         var _this = this;
         this.data.forEach(function (item) {
             _this.artistCount[item.artist + " "] = !_this.artistCount.hasOwnProperty(item.artist + " ")
@@ -113,7 +125,7 @@ var MusicStats = /** @class */ (function () {
                 : _this.artistCount[item.artist + " "] + 1;
         });
     };
-    MusicStats.prototype.getArtistsSorted = function () {
+    MusicStatsService.prototype.getArtistsSorted = function () {
         var sortable = [];
         for (var item in this.artistCount) {
             sortable.push([item, this.artistCount[item]]);
@@ -124,7 +136,7 @@ var MusicStats = /** @class */ (function () {
         sortable.length = 20;
         this.artistsSorted = sortable;
     };
-    MusicStats.prototype.getTitlesSorted = function () {
+    MusicStatsService.prototype.getTitlesSorted = function () {
         var sortable = [];
         for (var item in this.titleCount) {
             sortable.push([item, this.titleCount[item][0], this.titleCount[item][1]]);
@@ -135,10 +147,6 @@ var MusicStats = /** @class */ (function () {
         sortable.length = 25;
         this.titlesSorted = sortable;
     };
-    return MusicStats;
+    return MusicStatsService;
 }());
-exports["default"] = MusicStats;
-// console.log(myActivity.titlesSorted);
-/*
- *
- */
+exports["default"] = MusicStatsService;

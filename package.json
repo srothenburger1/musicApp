@@ -3,5 +3,8 @@
     "@types/node": "^13.5.1",
     "xhr2": "^0.2.0",
     "xmlhttprequest": "^1.8.0"
+  },
+  "scripts":{
+    "start": "tsc ./Services/*.ts && tsc ./Server/*.ts && node ./Server/app.js "
   }
 }
