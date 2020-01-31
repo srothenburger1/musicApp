@@ -1,4 +1,5 @@
 import MusicStatsService from "../Services/MusicStatsService.js"
+import { v4 as uuid } from 'uuid';
 
 const express = require('express'),
 app = express(),
@@ -9,7 +10,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
-app.get('/', (req, res) => res.send("The list of options is /topsongs, /topartists, /allartists, /allsongs, /allartistscount, /allsongscount"))
+let userData = {
+    
+};
+
+app.get('/', (req, res) => res.send(
+    "The list of options is /topsongs, /topartists, /allartistscount, /allsongscount"
+    ))
 
 function getLists(req){
     let path = req.body.path;
