@@ -5,37 +5,61 @@ const express = require('express')
 const app = express();
 const port = 3000
 
-app.use(express.json());
-app.use(express.urlencoded());
-app.use(express.multipart());
+
+var bodyParser = require('body-parser');
+
+// app.use(bodyParser.json());
+
+//support parsing of application/x-www-form-urlencoded post data
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json())
+app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 let myActivity = MusicStatsService.createObj('../My Activity.json', 2018);
 
 app.get('/', (req, res) => res.send("The list of options is /topsongs, /topartists, /allartists, /allsongs, /allartistscount, /allsongscount"))
 
-app.post('/topsongs', (req,res)=> {
-    /*
-     {
-        id:123,
-        path:./activity,
-        year:2019,
-     } 
-     */
+function getLists(req){
     let path = req.body.path;
     let year = req.body.year;
+    return MusicStatsService.createObj(path, year);
+}
+
+/*
+    {
+    id:123,
+    path:./activity,
+    year:2019,
+} 
+*/
+
+
+app.post('/topsongs', (req,res)=> {
+    const activity = getLists(req);
+    res.send(activity.titlesSorted);
 })
 
-app.get('/topsongs', (req, res) => res.send(myActivity.titlesSorted))
+app.post('/topartists', (req,res)=> {
+    const activity = getLists(req);
+    res.send(activity.artistsSorted);
+})
 
-app.get('/topartists', (req, res) => res.send(myActivity.artistsSorted))
+app.post('/allsongs', (req,res)=> {
+    const activity = getLists(req);
+    res.send(activity.uniqueTitles);
+})
 
-app.get('/allartists', (req, res) => res.send(myActivity.uniqueArtists))
-app.get('/allartistscount', (req, res) => res.send(myActivity.uniqueArtists.length.toString()))
+app.post('/allartists', (req,res)=> {
+    const activity = getLists(req);
+    res.send(activity.uniqueArtists);
+})
 
+app.post('/allsongscount', (req,res)=> {
+    const activity = getLists(req);
+    res.send(activity.uniqueTitles.length.toString());
+})
 
-app.get('/allsongs', (req, res) => res.send(myActivity.uniqueTitles))
-app.get('/allsongscount', (req, res) => res.send(myActivity.uniqueTitles.length.toString()))
-
-
-
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.post('/allartistscount', (req,res)=> {
+    const activity = getLists(req);
+    res.send(activity.uniqueTitles.length.toString());
+})
