@@ -9,6 +9,9 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
+import ContactsIcon from '@material-ui/icons/Contacts'
+import MusicNoteIcon from '@material-ui/icons/MusicNote'
+import CloudUploadIcon from '@material-ui/icons/CloudUpload'
 
 const useStyles = makeStyles({
   list: {
@@ -19,7 +22,7 @@ const useStyles = makeStyles({
   },
 });
 
-function SwipeableTemporaryDrawer() {
+const SwipeableTemporaryDrawer = ({onInputChange}) => {
   const classes = useStyles();
   const [state, setState] = React.useState({
     top: false,
@@ -36,73 +39,96 @@ function SwipeableTemporaryDrawer() {
     setState({ ...state, [side]: open });
   };
 
-  const sideList = side => (
-    <div
-      className={classes.list}
-      role="presentation"
-      onClick={toggleDrawer(side, false)}
-      onKeyDown={toggleDrawer(side, false)}
-    >
-      <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
-    </div>
-  );
+//   const sideList = side => (
+//     <div
+//       className={classes.list}
+//       role="presentation"
+//       onClick={toggleDrawer(side, false)}
+//       onKeyDown={toggleDrawer(side, false)}
+//     >
+//       <List>
+//         {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+//           <ListItem button key={text}>
+//             <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+//             <ListItemText primary={text} />
+//           </ListItem>
+//         ))}
+//       </List>
+//       <Divider />
+//       <List>
+//         {['All mail', 'Trash', 'Spam'].map((text, index) => (
+//           <ListItem button key={text}>
+//             <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+//             <ListItemText primary={text} />
+//           </ListItem>
+//         ))}
+//       </List>
+//     </div>
+//   );
 
   const fullList = side => (
+    
     <div
       className={classes.fullList}
       role="presentation"
       onClick={toggleDrawer(side, false)}
       onKeyDown={toggleDrawer(side, false)}
     >
-      <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+   
+    <List>
+        {['Upload Data'].map((text, index) => (
+        <label htmlFor="contained-button-file1">
           <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+            <ListItemIcon>{<CloudUploadIcon />}</ListItemIcon>
+            <ListItemText primary={text} />
+          </ListItem>
+          </label>
+        ))}
+      </List>
+      <Divider />
+      <List>
+        {['Top Songs', 'Top Artists'].map((text, index) => (
+          <ListItem button key={text}>
+            <ListItemIcon>{index % 2 === 0 ? <MusicNoteIcon /> : <ContactsIcon />}</ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
         ))}
       </List>
       <Divider />
       <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
+        {['Song Count', 'Artist Count'].map((text, index) => (
           <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+            <ListItemIcon>{index % 2 === 0 ? <MusicNoteIcon /> : <ContactsIcon />}</ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
         ))}
       </List>
+      
     </div>
   );
 
   return (
     <div>
-      <Button onClick={toggleDrawer('left', true)}>Open Left</Button>
-      <Button onClick={toggleDrawer('right', true)}>Open Right</Button>
-      <Button onClick={toggleDrawer('top', true)}>Open Top</Button>
-      <Button onClick={toggleDrawer('bottom', true)}>Open Bottom</Button>
-      <SwipeableDrawer
+    <input
+        accept="JSON/*"
+        className={classes.input}
+        id="contained-button-file1"
+        multiple
+        type="File"
+        onChange={onInputChange}
+        style={{display:"none"}}
+      /> 
+      {/* <Button onClick={toggleDrawer('left', true)}>Open Left</Button>
+      <Button onClick={toggleDrawer('right', true)}>Open Right</Button> */}
+      <Button onClick={toggleDrawer('top', true)}>Menu</Button>
+      {/* <Button onClick={toggleDrawer('bottom', true)}>Open Bottom</Button> */}
+      {/* <SwipeableDrawer
         open={state.left}
         onClose={toggleDrawer('left', false)}
         onOpen={toggleDrawer('left', true)}
       >
         {sideList('left')}
-      </SwipeableDrawer>
+      </SwipeableDrawer> */}
       <SwipeableDrawer
         anchor="top"
         open={state.top}
@@ -111,22 +137,22 @@ function SwipeableTemporaryDrawer() {
       >
         {fullList('top')}
       </SwipeableDrawer>
-      <SwipeableDrawer
+      {/* <SwipeableDrawer
         anchor="bottom"
         open={state.bottom}
         onClose={toggleDrawer('bottom', false)}
         onOpen={toggleDrawer('bottom', true)}
-      >
-        {fullList('bottom')}
-      </SwipeableDrawer>
-      <SwipeableDrawer
+      > */}
+        {/* {fullList('bottom')}
+      </SwipeableDrawer> */}
+      {/* <SwipeableDrawer
         anchor="right"
         open={state.right}
         onClose={toggleDrawer('right', false)}
         onOpen={toggleDrawer('right', true)}
       >
         {sideList('right')}
-      </SwipeableDrawer>
+      </SwipeableDrawer> */}
     </div>
   );
 }

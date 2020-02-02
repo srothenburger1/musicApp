@@ -15,15 +15,17 @@ class App extends Component {
   return (
     <div className="App">
     <br/>
-    <SwipeableTemporaryDrawer/>
+    <SwipeableTemporaryDrawer
+      onInputChange = {this.onInputChange}
+    />
     <br/>
-      <UploadButtons
+      {/* <UploadButtons
         onInputChange={this.onInputChange}
-      />
+      /> */}
       {this.state.input != null?this.state.input.map((item,index)=>{
         return(<div><p>{item[0]}</p><p>{item[1]}</p><p>{item[2]}</p></div>)
         }
-        ):<div>No</div>
+        ):<div>No Data Uploaded</div>
         }
     </div>
   );
