@@ -20,18 +20,19 @@ const useStyles = makeStyles(theme => ({
   return (
     <div className={classes.root}>
       <input
-        accept="image/*"
+        accept="JSON/*"
         className={classes.input}
         id="contained-button-file"
         multiple
         type="File"
+        onChange={onInputChange}
       />
       <label htmlFor="contained-button-file">
         <Button 
         variant="contained" 
         color="primary" 
         component="span"
-        onClick={onInputChange}>
+        >
           Upload Google Play Data
         </Button>
       </label>
