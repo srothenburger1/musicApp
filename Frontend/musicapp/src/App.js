@@ -29,44 +29,20 @@ class App extends Component {
   );
   }
 
-  readFileContent(file) {
-    const reader = new FileReader()
-    return new Promise((resolve, reject) => {
-      reader.onload = event => resolve(event.target.result)
-      reader.onerror = error => reject(error)
-      reader.readAsText(file)
-    })
-  }
   onInputChange = event => {
     let data = event.target.files[0];
     var formData = new FormData();
-    formData.append("id", "123");
+    formData.append("id", "124");
     formData.append("year", "2020");
     formData.append("path", data);    
     
-    // fetch("http://localhost:5000/upload", {
-    //   method: "post",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify(
-    //     {
-    //       id:"123",
-    //       path:json,
-    //       year:"2020"
-
     console.log(...formData)
      axios.post("http://localhost:5000/upload", formData, { // receive two parameter endpoint url ,form data 
     })
     .then(res => { // then print response status
       console.log("response",res)
-    })
-    
-    // .then(response => response.json())
-    // .then(data=>{this.setState({ input: data }); })
-    
+    })    
   };
-
 }
-
-
 
 export default App;

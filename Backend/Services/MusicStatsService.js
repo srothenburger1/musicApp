@@ -17,7 +17,13 @@ var MusicStatsService = /** @class */ (function () {
     // }
     //#endregion
     //#region Constructors
-    function MusicStatsService(path, year) {
+    // constructor(path: string, year: number) {
+    // 	this.rawJson = this.getJSON(path);
+    // 	this.stringJson = JSON.stringify(this.rawJson);
+    // 	this.parseJSON(year);
+    // 	this.init();
+    // }
+    function MusicStatsService(file, year) {
         //#region Properties
         this.rawJson = null;
         this.stringJson = null;
@@ -32,8 +38,8 @@ var MusicStatsService = /** @class */ (function () {
         this.titlesSorted = [];
         //
         this.data = new Array();
-        this.rawJson = this.getJSON(path);
-        this.stringJson = JSON.stringify(this.rawJson);
+        this.rawJson = file;
+        // this.stringJson = JSON.stringify(this.rawJson);
         this.parseJSON(year);
         this.init();
     }
@@ -47,11 +53,14 @@ var MusicStatsService = /** @class */ (function () {
     //#endregion
     //#region Methods
     MusicStatsService.creatObjFromObj = function (payload) {
-        var statsObj = JSON.parse(payload.path);
-        console.log(statsObj);
+        // console.log(payload.path)
+        var statsObj = JSON.parse(payload.file);
+        console.log(statsObj, "creatObjFromObj");
     };
-    MusicStatsService.createObj = function (path, year) {
-        var statsObj = new MusicStatsService(path, year);
+    MusicStatsService.createObj = function (data) {
+        var file = JSON.parse(data.file);
+        var year = data.year;
+        var statsObj = new MusicStatsService(file, year);
         var activity = {
             totalTitles: statsObj.uniqueTitles.length.toString(),
             totalArtists: statsObj.uniqueArtists.length.toString(),
@@ -62,6 +71,18 @@ var MusicStatsService = /** @class */ (function () {
         };
         return activity;
     };
+    // static createObj(path:string, year:number){
+    // 	let statsObj = new MusicStatsService(path, year);
+    // 	const activity:MyActivity = {
+    // 		totalTitles : statsObj.uniqueTitles.length.toString(),
+    // 		totalArtists : statsObj.uniqueArtists.length.toString(),
+    // 		titleCount : statsObj.titleCount,
+    // 		artistCount : statsObj.artistCount,
+    // 		artistsSorted : statsObj.artistsSorted,
+    // 		titlesSorted : statsObj.titlesSorted
+    // 	};
+    // 	return activity;
+    // }
     MusicStatsService.prototype.getJSON = function (path) {
         var result = null;
         try {

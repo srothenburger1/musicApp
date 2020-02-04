@@ -5,7 +5,6 @@ const app = express();
 const cors = require('cors');
 const port = 5000;
 const bodyParser = require('body-parser');
-const FileReader = require('filereader');
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/' })
 const fs = require('fs');
@@ -22,69 +21,55 @@ app.use(
     })
   );
 
+  let userData={};
+
 app.listen(port, () => console.log(`Server listening on port ${port}!`))
 
+
+// this route will take the users file, parse it, and store it in an array
 app.post('/upload',upload.single('path'),function(req, res, next) {
-    
-    let payLoad = {
+    let payLoad;
+
+    if(userData.hasOwnProperty(req.body.id)){
+        res.status(200).send("User data already in db")
+    }else{
+
+    payLoad = {
         id : req.body.id,
-        path : req.file,
+        file : req.file,
         year : req.body.year
     }
 
-    // console.log(req)
     fs.readFile(req.file.path, 'utf8', function(err, data) {
-    if (err) throw err;
-    // console.log(data);
-    payLoad.path = data
-    MusicStatsService.creatObjFromObj(payLoad)
-    })
+        if (err) throw err;
+        payLoad.file = data
+        // add it to the userdata obj
+        userData[req.body.id] = MusicStatsService.createObj(payLoad)
+        console.log(userData[req.body.id].titlesSorted,"userdata")
+        console.log(userData)
+        })
 
-      res.status(200).send("ok")
-
+        res.status(200).send("User data uploaded")
+}
+      
 });
-
 
 app.get('/', (req, res) => res.send(
     "The list of options is /topsongs, /topartists, /allartistscount, /allsongscount"
     ))
-app.post('/yoy', (req,res)=> {
-    res.status(200);
-    console.log(req)
-    res.send("good")
-})
-function getLists(req){
-    let path = req.body.path;
-    let year = req.body.year;
-    return MusicStatsService.createObj(path, year);
-}
-
-/*
-    {
-    id:123,
-    path:./activity,
-    year:2019,
-} 
-*/
-
 
 app.post('/topsongs', (req,res)=> {
-    const activity = getLists(req);
-    
-    res.send(activity.titlesSorted);
+    res.send(userData[req.body.id].titlesSorted);
 })
 
 app.post('/topartists', (req,res)=> {
-    const activity = getLists(req);
-    res.send(activity.artistsSorted);
+    res.send(userData[req.body.id].artistsSorted);
 })
 
 app.post('/allsongscount', (req,res)=> {
-    const activity = getLists(req);
-    res.send(activity.totalTitles);
+    res.send(userData[req.body.id].totalTitles);
 })
 
 app.post('/allartistscount', (req,res)=> {
-    const activity = getLists(req);
-    res.send(activity.totalArtists);
+    res.send(userData[req.body.id].totalArtists);
 })

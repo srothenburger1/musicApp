@@ -40,9 +40,15 @@ class MusicStatsService {
 	//#endregion
 
 	//#region Constructors
-	constructor(path: string, year: number) {
-		this.rawJson = this.getJSON(path);
-		this.stringJson = JSON.stringify(this.rawJson);
+	// constructor(path: string, year: number) {
+	// 	this.rawJson = this.getJSON(path);
+	// 	this.stringJson = JSON.stringify(this.rawJson);
+	// 	this.parseJSON(year);
+	// 	this.init();
+	// }
+	constructor(file, year) {
+		this.rawJson = file;
+		// this.stringJson = JSON.stringify(this.rawJson);
 		this.parseJSON(year);
 		this.init();
 	}
@@ -59,14 +65,17 @@ class MusicStatsService {
 	//#region Methods
 
 	static creatObjFromObj(payload:any){
-		
-		let statsObj = JSON.parse(payload.path)
-		console.log(statsObj);
+		// console.log(payload.path)
+		let statsObj = JSON.parse(payload.file)
+		console.log(statsObj,"creatObjFromObj");
 
 	}
 
-	static createObj(path:string, year:number){
-		let statsObj = new MusicStatsService(path, year);
+	static createObj(data){
+		let file = JSON.parse(data.file)
+		let year = data.year;
+
+		let statsObj = new MusicStatsService(file, year);
 
 		const activity:MyActivity = {
 			totalTitles : statsObj.uniqueTitles.length.toString(),
@@ -80,6 +89,23 @@ class MusicStatsService {
 		};
 		return activity;
 	}
+
+	// static createObj(path:string, year:number){
+
+	// 	let statsObj = new MusicStatsService(path, year);
+
+	// 	const activity:MyActivity = {
+	// 		totalTitles : statsObj.uniqueTitles.length.toString(),
+	// 		totalArtists : statsObj.uniqueArtists.length.toString(),
+
+	// 		titleCount : statsObj.titleCount,
+	// 		artistCount : statsObj.artistCount,
+
+	// 		artistsSorted : statsObj.artistsSorted,
+	// 		titlesSorted : statsObj.titlesSorted
+	// 	};
+	// 	return activity;
+	// }
 
 	getJSON(path: string): Array<object> {
 		let result: Array<object> = null;
