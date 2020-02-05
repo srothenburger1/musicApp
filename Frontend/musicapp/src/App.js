@@ -9,7 +9,9 @@ class App extends Component {
     super();
     this.state = {
       input: null,
-      file: null
+      file: null,
+      topSongsData: null,
+      topArtistsData: null
     }
   }
   render(){
@@ -17,10 +19,11 @@ class App extends Component {
     <div className="App">
     <br/>
     <SwipeableTemporaryDrawer
-      onInputChange = {this.onInputChange}
+      onUploadClick = {this.onUploadClick}
+      onTopSongsClick = {this.onTopSongsClick}
     />
     <br/>
-      {this.state.input != null?this.state.input.map((item,index)=>{
+      {this.state.topSongsData != null?this.state.topSongsData.map((item,index)=>{
         return(<div><p>{item[0]}</p><p>{item[1]}</p><p>{item[2]}</p></div>)
         }
         ):<div>No Data Uploaded</div>
@@ -29,19 +32,24 @@ class App extends Component {
   );
   }
 
-  onInputChange = event => {
+  onUploadClick = event => {
     let data = event.target.files[0];
     var formData = new FormData();
-    formData.append("id", "124");
+    formData.append("id", "123");
     formData.append("year", "2020");
     formData.append("path", data);    
     
-    console.log(...formData)
      axios.post("http://localhost:5000/upload", formData, { // receive two parameter endpoint url ,form data 
     })
     .then(res => { // then print response status
-      console.log("response",res)
-    })    
+      console.log(res.status)
+    })   
+  };
+
+  onTopSongsClick = event => {
+    axios.post("http://localhost:5000/topsongs", {id:"123"})
+    .then(response => {this.setState({topSongsData : response.data})})
+    // .then(response => {console.log(response.data)})
   };
 }
 

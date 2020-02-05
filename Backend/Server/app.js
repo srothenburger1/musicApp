@@ -2,13 +2,14 @@
 exports.__esModule = true;
 var MusicStatsService_js_1 = require("../Services/MusicStatsService.js");
 var express = require('express');
-var app = express();
 var cors = require('cors');
-var port = 5000;
 var bodyParser = require('body-parser');
 var multer = require('multer');
-var upload = multer({ dest: 'uploads/' });
 var fs = require('fs');
+var upload = multer({ dest: 'uploads/' });
+var app = express();
+var port = 5000;
+var userData = new Object();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors({
@@ -18,28 +19,29 @@ app.use(cors({
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     preflightContinue: false
 }));
-var userData = {};
-app.listen(port, function () { return console.log("Server listening on port " + port + "!"); });
-// this route will take the users file, parse it, and store it in an array
-app.post('/upload', upload.single('path'), function (req, res, next) {
-    var payLoad;
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+app.listen(port, function () { return console.log("Server running on port " + port + "!"); });
+app.post('/upload', upload.single('path'), function (req, res) {
     if (userData.hasOwnProperty(req.body.id)) {
         res.status(200).send("User data already in db");
     }
     else {
-        payLoad = {
+        var payLoad_1 = {
             id: req.body.id,
-            file: req.file,
+            file: '',
             year: req.body.year
         };
         fs.readFile(req.file.path, 'utf8', function (err, data) {
             if (err)
                 throw err;
-            payLoad.file = data;
+            payLoad_1.file = data;
             // add it to the userdata obj
-            userData[req.body.id] = MusicStatsService_js_1["default"].createObj(payLoad);
-            console.log(userData[req.body.id].titlesSorted, "userdata");
-            console.log(userData);
+            userData[req.body.id] = MusicStatsService_js_1["default"].createObj(payLoad_1);
+            console.log(userData[req.body.id].titlesSorted, "titles sorted");
         });
         res.status(200).send("User data uploaded");
     }

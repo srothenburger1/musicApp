@@ -20,7 +20,7 @@ const useStyles = makeStyles({
   },
 });
 
-const SwipeableTemporaryDrawer = ({onInputChange}) => {
+const SwipeableTemporaryDrawer = ({onUploadClick, onTopSongsClick}) => {
   const classes = useStyles();
   const [state, setState] = React.useState({
     top: false,
@@ -59,7 +59,7 @@ const SwipeableTemporaryDrawer = ({onInputChange}) => {
       <Divider />
       <List>
         {['Top Songs', 'Top Artists'].map((text, index) => (
-          <ListItem button key={text}>
+          <ListItem button key={text} onClick = {onTopSongsClick}>
             <ListItemIcon>{index % 2 === 0 ? <MusicNoteIcon /> : <ContactsIcon />}</ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
@@ -86,7 +86,7 @@ const SwipeableTemporaryDrawer = ({onInputChange}) => {
         id="contained-button-file1"
         multiple
         type="File"
-        onChange={onInputChange}
+        onChange={onUploadClick}
         style={{display:"none"}}
       /> 
       <Button onClick={toggleDrawer('top', true)}>Menu</Button>

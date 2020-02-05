@@ -1,13 +1,11 @@
 import {MyActivity} from "../Interfaces/Models/IMyActivity";
-const fs = require('fs');
 
 class MusicStatsService {
 	//#region Properties
-	rawJson:any = null;
-	stringJson: string = null;
+	sortedData: Array<{title:string, artist:string}> = new Array();
 
-	uniqueTitles: object[] = [];
-	uniqueArtists: object[] = [];
+	uniqueTitles: Array<{}> = [];
+	uniqueArtists: Array<{}> = [];
 	//
 	totalTitles:string = '';
 	totalArtists:string = '';
@@ -18,7 +16,6 @@ class MusicStatsService {
 	artistsSorted: Array<[string,number]> = [];
 	titlesSorted: Array<[string,string,number]> = [];
 	//
-	data: any[] = new Array();
 
 	// re-enable getters when i figure out the compiler issues.
 	// public get UniqueTitles() : Array<any> {
@@ -39,45 +36,29 @@ class MusicStatsService {
 
 	//#endregion
 
-	//#region Constructors
-	// constructor(path: string, year: number) {
-	// 	this.rawJson = this.getJSON(path);
-	// 	this.stringJson = JSON.stringify(this.rawJson);
-	// 	this.parseJSON(year);
-	// 	this.init();
-	// }
-	constructor(file, year) {
-		this.rawJson = file;
-		// this.stringJson = JSON.stringify(this.rawJson);
-		this.parseJSON(year);
-		this.init();
+	constructor(jsonFile:Array<{title:string, description:string}>, year:number) {
+		this.sortRawData(jsonFile,year);
+		this.initSort();
 	}
-	init(): void {
+	initSort(): void {
 		this.sortInfo();
-		this.countArtist();
-		this.getArtistsSorted();
+		this.countArtists();
+		this.sortArtists();
 		this.countTitles();
-		this.getTitlesSorted();
+		this.sortTitles();
 	}
 
 	//#endregion
 
 	//#region Methods
 
-	static creatObjFromObj(payload:any){
-		// console.log(payload.path)
-		let statsObj = JSON.parse(payload.file)
-		console.log(statsObj,"creatObjFromObj");
-
-	}
-
 	static createObj(data){
-		let file = JSON.parse(data.file)
-		let year = data.year;
+		const file = JSON.parse(data.file)
+		const year = data.year;
 
-		let statsObj = new MusicStatsService(file, year);
+		const statsObj = new MusicStatsService(file, year);
 
-		const activity:MyActivity = {
+		const activity: MyActivity = {
 			totalTitles : statsObj.uniqueTitles.length.toString(),
 			totalArtists : statsObj.uniqueArtists.length.toString(),
 
@@ -90,46 +71,23 @@ class MusicStatsService {
 		return activity;
 	}
 
-	// static createObj(path:string, year:number){
-
-	// 	let statsObj = new MusicStatsService(path, year);
-
-	// 	const activity:MyActivity = {
-	// 		totalTitles : statsObj.uniqueTitles.length.toString(),
-	// 		totalArtists : statsObj.uniqueArtists.length.toString(),
-
-	// 		titleCount : statsObj.titleCount,
-	// 		artistCount : statsObj.artistCount,
-
-	// 		artistsSorted : statsObj.artistsSorted,
-	// 		titlesSorted : statsObj.titlesSorted
-	// 	};
-	// 	return activity;
-	// }
-
-	getJSON(path: string): Array<object> {
-		let result: Array<object> = null;
-		try {
-			result = require(path);
-		} catch (e) {
-			console.log(e);
-		}
-		return result;
-	}
-
-	parseJSON(year: number): void {
+	sortRawData(jsonFile:Array<{title:string, description:string}>,year: number): void {
 		const yearVar: string = year.toString();
-		this.rawJson.forEach(element => {
+
+		jsonFile.forEach(element => {
 			if (element.hasOwnProperty('title')) {
-				if (JSON.stringify(element).includes(yearVar) && JSON.stringify(element).includes('Listened to')) {
-					this.data.push({ title: JSON.stringify(element.title).slice(13, -1), artist: element.description });
+				if (JSON.stringify(element).includes(yearVar) 
+				&& JSON.stringify(element).includes('Listened to')) {
+					this.sortedData.push(
+						{ title: JSON.stringify(element.title).slice(13, -1)
+							, artist: element.description });
 				}
 			}
 		});
 	}
 
 	sortInfo(): void {
-		this.data.forEach(item => {
+		this.sortedData.forEach(item => {
 			if (!this.uniqueArtists.includes(item.artist)) {
 				this.uniqueArtists.push(item.artist);
 			}
@@ -140,7 +98,7 @@ class MusicStatsService {
 	}
 
 	countTitles(): void {
-		this.data.forEach(item => {
+		this.sortedData.forEach(item => {
 			if (!this.titleCount.hasOwnProperty(`${item.title} `)) {
 				this.titleCount[`${item.title} `] = [`${item.artist} `, 1];
 			} else {
@@ -149,56 +107,34 @@ class MusicStatsService {
 		});
 	}
 
-	// @deprecated as there is a better way to do this
-	// countTitles(){
-	//     this.info.forEach(item => {
-	//         // if the title count doesnt have the artist
-	//         if(!this.titleCount.hasOwnProperty(item.artist))
-	//         {
-	//             // add the artist and first title
-	//             this.titleCount[item.artist] =
-	//             {
-	//                 titles: {}
-	//             };
-	//             this.titleCount[item.artist].titles[item.title] = 1;
-	//         }
-	//         // else if title count -> artist doesnt contain the title
-	//         else if(!this.titleCount[item.artist]["titles"].hasOwnProperty(item.title)){
-	//             this.titleCount[item.artist].titles[item.title] = 1;
-	//         }else if(this.titleCount[item.artist]["titles"].hasOwnProperty(item.title)){
-	//             this.titleCount[item.artist].titles[item.title] += 1;
-	//         }
-	//     })
-	// }
-
-	countArtist(): void {
-		this.data.forEach(item => {
+	countArtists(): void {
+		this.sortedData.forEach(item => {
 			this.artistCount[`${item.artist} `] = !this.artistCount.hasOwnProperty(`${item.artist} `)
 				? 1
 				: this.artistCount[`${item.artist} `] + 1;
 		});
 	}
 
-	getArtistsSorted(): void {
-		var sortable = [];
-		for (var item in this.artistCount) {
+	sortArtists(): void {
+		let sortable = [];
+		for (let item in this.artistCount) {
 			sortable.push([item, this.artistCount[item]]);
 		}
 
-		sortable.sort(function(a, b) {
+		sortable.sort((a, b) => {
 			return b[1] - a[1];
 		});
 		sortable.length = 20;
 		this.artistsSorted = sortable;
 	}
 
-	getTitlesSorted(): void {
-		var sortable = [];
-		for (var item in this.titleCount) {
+	sortTitles(): void {
+		let sortable = [];
+		for (let item in this.titleCount) {
 			sortable.push([item, this.titleCount[item][0], this.titleCount[item][1]]);
 		}
 
-		sortable.sort(function(a, b) {
+		sortable.sort((a, b) => {
 			return b[2] - a[2];
 		});
 		sortable.length = 25;
