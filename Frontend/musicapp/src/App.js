@@ -11,7 +11,9 @@ class App extends Component {
       input: null,
       file: null,
       topSongsData: null,
-      topArtistsData: null
+      topArtistsData: null,
+      allSongsCount: null,
+      allArtistsCount: null
     }
   }
   render(){
@@ -21,12 +23,16 @@ class App extends Component {
     <SwipeableTemporaryDrawer
       onUploadClick = {this.onUploadClick}
       onTopSongsClick = {this.onTopSongsClick}
+      onTopArtistsClick = {this.onTopArtistsClick}
+
     />
     <br/>
-      {this.state.topSongsData != null?this.state.topSongsData.map((item,index)=>{
+      {this.state.route === "topSongs" && this.state.topSongsData != null?this.state.topSongsData.map((item,index)=>{
         return(<div><p>{item[0]}</p><p>{item[1]}</p><p>{item[2]}</p></div>)
         }
-        ):<div>No Data Uploaded</div>
+        ): this.state.route === "topArtists" && this.state.topArtistsData != null? <div>top Artists</div>
+        
+        :<div>No Data Uploaded</div>
         }
     </div>
   );
@@ -49,6 +55,18 @@ class App extends Component {
   onTopSongsClick = event => {
     axios.post("http://localhost:5000/topsongs", {id:"123"})
     .then(response => {this.setState({topSongsData : response.data})})
+
+    axios.post("http://localhost:5000/allsongscount", {id:"123"})
+    .then(response => {this.setState({allSongsCount : response.data, route:"topSongs"})})
+    // .then(response => {console.log(response.data)})
+  };
+
+  onTopArtistsClick = event => {
+    axios.post("http://localhost:5000/topartists", {id:"123"})
+    .then(response => {this.setState({topArtistsData : response.data})})
+
+    axios.post("http://localhost:5000/allartistscount", {id:"123"})
+    .then(response => {this.setState({allArtistsCount : response.data, route:"topArtists"})})
     // .then(response => {console.log(response.data)})
   };
 }
