@@ -15,28 +15,24 @@ const useStyles = makeStyles({
   },
 });
 
-function createData(name, listens) {
-  return { name, listens };
+function createData(artist, listens) {
+  return { artist, listens };
 }
 
-const rows = [
-  createData('Frozen yoghurt', 159),
-  createData('Ice cream sandwich', 237),
-  createData('Eclair', 262),
-  createData('Cupcake', 305),
-  createData('Gingerbread', 356)
-];
-
-const SimpleTable = ({name, count}) => {
+const ArtistTable = ({data}) => {
   const classes = useStyles();
+const rows = [];
 
+data.forEach(element => {
+  rows.push(createData(element[0],element[1]))
+});
   return (
     <div style={{display:"inline-block"}}>
     <TableContainer component={Paper} style={{ margin:"auto"}}>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
+            <TableCell>Artist</TableCell>
             <TableCell align="right">Listens</TableCell>
           </TableRow>
         </TableHead>
@@ -44,7 +40,7 @@ const SimpleTable = ({name, count}) => {
           {rows.map(row => (
             <TableRow key={row.name}>
               <TableCell component="th" scope="row">
-                {row.name}
+                {row.artist}
               </TableCell>
               <TableCell align="right">{row.listens}</TableCell>
             </TableRow>
@@ -56,4 +52,4 @@ const SimpleTable = ({name, count}) => {
   );
 }
 
-export {SimpleTable};
+export {ArtistTable};
