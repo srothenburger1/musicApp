@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import { SwipeableTemporaryDrawer } from "./Drawers/SwipeableDrawer";
 import axios from 'axios';
+import {SimpleTable} from './Tables/SimpleTable'
 
 
 class App extends Component {
@@ -30,9 +31,12 @@ class App extends Component {
       {this.state.route === "topSongs" && this.state.topSongsData != null?this.state.topSongsData.map((item,index)=>{
         return(<div><p>{item[0]}</p><p>{item[1]}</p><p>{item[2]}</p></div>)
         }
-        ): this.state.route === "topArtists" && this.state.topArtistsData != null? <div>top Artists</div>
+        ): this.state.route === "topArtists" && this.state.topArtistsData != null ? this.state.topArtistsData.map((item,index)=>{
+        return(<div><p>{item[0]}</p><p>{item[1]}</p><p>{item[2]}</p></div>)
+        }
+        )
         
-        :<div>No Data Uploaded</div>
+        :<div><SimpleTable/></div>
         }
     </div>
   );
@@ -63,7 +67,7 @@ class App extends Component {
 
   onTopArtistsClick = event => {
     axios.post("http://localhost:5000/topartists", {id:"123"})
-    .then(response => {this.setState({topArtistsData : response.data})})
+    .then(response => {this.setState({topArtistsData : response.data}, console.log(response.data))})
 
     axios.post("http://localhost:5000/allartistscount", {id:"123"})
     .then(response => {this.setState({allArtistsCount : response.data, route:"topArtists"})})
