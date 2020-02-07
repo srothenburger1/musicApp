@@ -11,6 +11,7 @@ class App extends Component {
   constructor(){
     super();
     this.state = {
+      data: null,
       input: null,
       file: null,
       topSongsData: null,
@@ -27,6 +28,7 @@ class App extends Component {
       onUploadClick = {this.onUploadClick}
       onTopSongsClick = {this.onTopSongsClick}
       onTopArtistsClick = {this.onTopArtistsClick}
+      onRouteChange = {this.onRouteChange}
 
     />
     <br/>
@@ -40,7 +42,12 @@ class App extends Component {
         }
     </div>
   );
-  }
+  
+}
+
+onRouteChange = route => {
+  this.setState({route:route})
+}
 
   onUploadClick = event => {
     let data = event.target.files[0];
@@ -51,26 +58,18 @@ class App extends Component {
     
      axios.post("http://localhost:5000/upload", formData, { // receive two parameter endpoint url ,form data 
     })
-    .then(res => { // then print response status
-      console.log(res.status)
-    })   
+    .then(res => {this.setState({
+       topArtistsData: res.data.artistsSorted
+      , topSongsData: res.data.titlesSorted
+      , allArtistsCount: res.data.totalArtists
+      , allSongsCount: res.data.allSongsCount}
+      )
+    this.onRouteChange("topSongs")
+    }
+      )   
   };
 
-  onTopSongsClick = event => {
-    axios.post("http://localhost:5000/topsongs", {id:"123"})
-    .then(response => {this.setState({topSongsData : response.data})})
-
-    axios.post("http://localhost:5000/allsongscount", {id:"123"})
-    .then(response => {this.setState({allSongsCount : response.data, route:"topSongs"})})
-  };
-
-  onTopArtistsClick = event => {
-    axios.post("http://localhost:5000/topartists", {id:"123"})
-    .then(response => {this.setState({topArtistsData : response.data}, console.log(response.data))})
-
-    axios.post("http://localhost:5000/allartistscount", {id:"123"})
-    .then(response => {this.setState({allArtistsCount : response.data, route:"topArtists"})})
-  };
+  
 }
 
 export default App;

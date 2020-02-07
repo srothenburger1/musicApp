@@ -10,7 +10,7 @@ const upload = multer({ dest: 'uploads/' })
 const app = express();
 const port: number = 5000;
 
-let userData: object = new Object();
+let userData;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
@@ -39,10 +39,6 @@ app.post(
         req:{body:{id:string, year:string},file:{path:string}}
         , res:{status:Function, send:Function}
         ) => {
-    
-    if(userData.hasOwnProperty(req.body.id)){
-        res.status(200).send("User data already in db")
-    }else{
 
     let payLoad: {id:string, file:string, year:string} = {
         id : req.body.id,
@@ -54,13 +50,12 @@ app.post(
         if (err) throw err;
         payLoad.file = data
         // add it to the userdata obj
-        userData[req.body.id] = MusicStatsService.createObj(payLoad)
-        console.log(userData[req.body.id].titlesSorted,"titles sorted")
-        })
+        userData = MusicStatsService.createObj(payLoad)
 
-        res.status(200).send("User data uploaded")
+        })
+        res.status(200).send(userData)
 } 
-});
+);
 
 app.get('/', (req:object, res:{send:Function}) => res.send(
     "The list of options is /topsongs, /topartists, /allartistscount, /allsongscount"

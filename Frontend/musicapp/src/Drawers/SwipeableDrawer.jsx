@@ -20,7 +20,7 @@ const useStyles = makeStyles({
   },
 });
 
-const SwipeableTemporaryDrawer = ({onUploadClick, onTopSongsClick, onTopArtistsClick}) => {
+const SwipeableTemporaryDrawer = ({onUploadClick, onRouteChange}) => {
   const classes = useStyles();
   const [state, setState] = React.useState({
     top: false,
@@ -59,22 +59,12 @@ const SwipeableTemporaryDrawer = ({onUploadClick, onTopSongsClick, onTopArtistsC
       <Divider />
       <List>
         {['Top Songs', 'Top Artists'].map((text, index) => (
-          <ListItem button key={text} onClick = {index % 2 === 0 ? onTopSongsClick : onTopArtistsClick}>
+          <ListItem button key={text} onClick = {()=>{onRouteChange(index % 2 === 0 ? "topSongs" : "topArtists")}}>
             <ListItemIcon>{index % 2 === 0 ? <MusicNoteIcon /> : <ContactsIcon />}</ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
         ))}
       </List>
-      {/* <Divider />
-      <List>
-        {['Song Count', 'Artist Count'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <MusicNoteIcon /> : <ContactsIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List> */}
-      
     </div>
   );
 
