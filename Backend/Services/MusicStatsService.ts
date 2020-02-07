@@ -15,26 +15,6 @@ class MusicStatsService {
 
 	artistsSorted: Array<[string,number]> = [];
 	titlesSorted: Array<[string,string,number]> = [];
-	//
-
-	// re-enable getters when i figure out the compiler issues.
-	// public get UniqueTitles() : Array<any> {
-	//     return this.uniqueTitles;
-	// }
-
-	// public get UniqueArtists() : Array<any> {
-	//     return this.uniqueArtists;
-	// }
-
-	// public get TitleCount() : Object {
-	//     return this.TitleCount;
-	// }
-
-	// public get ArtistCount() : Object {
-	//     return this.artistCount;
-	// }
-
-	//#endregion
 
 	constructor(jsonFile:Array<{title:string, description:string}>, year:number) {
 		this.sortRawData(jsonFile,year);
@@ -93,10 +73,14 @@ class MusicStatsService {
 			}
 			if (!this.uniqueTitles.includes(item.title)) {
 				this.uniqueTitles.push({ title: item.title, artist: item.artist });
+			}else{
+				console.log(item.title)
 			}
 		});
 	}
 
+	/// Counts the number of times a song shows up in the list
+	// If it isnt already in the list it will add the item.
 	countTitles(): void {
 		this.sortedData.forEach(item => {
 			if (!this.titleCount.hasOwnProperty(`${item.title} `)) {
@@ -107,6 +91,8 @@ class MusicStatsService {
 		});
 	}
 
+	/// Counts the number of times a artist shows up in the list
+	// If it isnt already in the list it will add the item.
 	countArtists(): void {
 		this.sortedData.forEach(item => {
 			this.artistCount[`${item.artist} `] = !this.artistCount.hasOwnProperty(`${item.artist} `)

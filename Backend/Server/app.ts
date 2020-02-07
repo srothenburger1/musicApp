@@ -49,7 +49,6 @@ app.post(
     fs.readFile(req.file.path, 'utf8', (err: ExceptionInformation, data:string) => {
         if (err) throw err;
         payLoad.file = data
-        // add it to the userdata obj
         userData = MusicStatsService.createObj(payLoad)
 
         })

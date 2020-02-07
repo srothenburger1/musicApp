@@ -4,6 +4,7 @@ import { SwipeableTemporaryDrawer } from "./Drawers/SwipeableDrawer";
 import axios from 'axios';
 import {SongsTable} from './Tables/SongsTable'
 import {ArtistTable} from './Tables/ArtistTable'
+import { CountsTable } from "./Tables/CountsTable";
 
 
 
@@ -32,6 +33,18 @@ class App extends Component {
 
     />
     <br/>
+    {this.state.allSongsCount != null 
+    && this.state.allArtistsCount != null
+    ? <div>
+    <CountsTable
+      songCount = {this.state.allSongsCount}
+      artistCount = {this.state.allArtistsCount}
+
+    />
+    </div>
+
+    :<div></div>}
+    <br/>
       {this.state.route === "topSongs" 
       && this.state.topSongsData != null
       ?<div><SongsTable data={this.state.topSongsData} title="Song"/></div>
@@ -53,16 +66,17 @@ onRouteChange = route => {
     let data = event.target.files[0];
     var formData = new FormData();
     formData.append("id", "123");
-    formData.append("year", "2020");
+    formData.append("year", "2019");
     formData.append("path", data);    
     
-     axios.post("http://localhost:5000/upload", formData, { // receive two parameter endpoint url ,form data 
+     axios.post("http://localhost:5000/upload", formData, { 
     })
-    .then(res => {this.setState({
+    .then(res => {console.log(res.data);this.setState({
        topArtistsData: res.data.artistsSorted
       , topSongsData: res.data.titlesSorted
       , allArtistsCount: res.data.totalArtists
-      , allSongsCount: res.data.allSongsCount}
+      , allSongsCount: res.data.totalTitles
+    }
       )
     this.onRouteChange("topSongs")
     }

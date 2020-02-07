@@ -31,7 +31,7 @@ data.forEach(element => {
     <TableContainer component={Paper} style={{ margin:"auto"}}>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
-          <TableRow>
+          <TableRow key = {"song"}>
             <TableCell>Song</TableCell>
             <TableCell align="right">Artist</TableCell>
             <TableCell align="right">Listens</TableCell>
@@ -39,7 +39,7 @@ data.forEach(element => {
         </TableHead>
         <TableBody>
           {rows.map(row => (
-            <TableRow key={row.name}>
+            <TableRow key={row.song}>
               <TableCell component="th" scope="row">
                 {row.song}
               </TableCell>

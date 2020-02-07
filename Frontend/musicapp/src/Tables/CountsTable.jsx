@@ -11,45 +11,33 @@ import Paper from '@material-ui/core/Paper';
 const useStyles = makeStyles({
   table: {
     minWidth: 650,
-    maxWidth:650
   },
 });
 
-function createData(artist, listens) {
-  return { artist, listens };
-}
-
-const ArtistTable = ({data}) => {
+const CountsTable = ({songCount, artistCount}) => {
   const classes = useStyles();
-const rows = [];
 
-data.forEach(element => {
-  rows.push(createData(element[0],element[1]))
-});
   return (
-    <div style={{display:"inline-block"}}>
-    <TableContainer component={Paper} style={{ margin:"auto"}}>
-      <Table className={classes.table} aria-label="simple table">
+      <div style={{display:"inline-block"}}>
+    <TableContainer component={Paper} style={{margin:"auto"}}>
+      <Table className={classes.table} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
-            <TableCell>Artist</TableCell>
-            <TableCell align="right">Listens</TableCell>
+            <TableCell>Total different songs listened to</TableCell>
+            <TableCell align="right">Total different artists listened to</TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
-          {rows.map(row => (
-            <TableRow key={row.artist}>
+        <TableBody>      
+            <TableRow key={"Counts"}>
               <TableCell component="th" scope="row">
-                {row.artist}
+                {songCount}
               </TableCell>
-              <TableCell align="right">{row.listens}</TableCell>
+              <TableCell align="right">{artistCount}</TableCell>
             </TableRow>
-          ))}
         </TableBody>
       </Table>
     </TableContainer>
     </div>
   );
 }
-
-export {ArtistTable};
+export {CountsTable};

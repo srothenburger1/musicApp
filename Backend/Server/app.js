@@ -35,7 +35,6 @@ app.post('/upload', upload.single('path'), function (req, res) {
         if (err)
             throw err;
         payLoad.file = data;
-        // add it to the userdata obj
         userData = MusicStatsService_js_1["default"].createObj(payLoad);
     });
     res.status(200).send(userData);

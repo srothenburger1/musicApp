@@ -1,21 +1,6 @@
 "use strict";
 exports.__esModule = true;
 var MusicStatsService = /** @class */ (function () {
-    //
-    // re-enable getters when i figure out the compiler issues.
-    // public get UniqueTitles() : Array<any> {
-    //     return this.uniqueTitles;
-    // }
-    // public get UniqueArtists() : Array<any> {
-    //     return this.uniqueArtists;
-    // }
-    // public get TitleCount() : Object {
-    //     return this.TitleCount;
-    // }
-    // public get ArtistCount() : Object {
-    //     return this.artistCount;
-    // }
-    //#endregion
     function MusicStatsService(jsonFile, year) {
         //#region Properties
         this.sortedData = new Array();
@@ -72,6 +57,9 @@ var MusicStatsService = /** @class */ (function () {
         this.sortedData.forEach(function (item) {
             if (!_this.uniqueArtists.includes(item.artist)) {
                 _this.uniqueArtists.push(item.artist);
+            }
+            else {
+                console.log(item.artist);
             }
             if (!_this.uniqueTitles.includes(item.title)) {
                 _this.uniqueTitles.push({ title: item.title, artist: item.artist });

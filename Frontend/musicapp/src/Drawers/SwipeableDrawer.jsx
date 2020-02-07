@@ -48,7 +48,7 @@ const SwipeableTemporaryDrawer = ({onUploadClick, onRouteChange}) => {
    
     <List>
         {['Upload Data'].map((text, index) => (
-        <label htmlFor="contained-button-file1">
+        <label key = {text} htmlFor="contained-button-file1">
           <ListItem button key={text}>
             <ListItemIcon>{<CloudUploadIcon />}</ListItemIcon>
             <ListItemText primary={text} />
