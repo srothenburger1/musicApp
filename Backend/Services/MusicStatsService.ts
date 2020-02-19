@@ -1,10 +1,10 @@
-import {MyActivity} from "../Interfaces/Models/IMyActivity";
+import { MyActivity } from "../Interfaces/Models/IMyActivity";
 
 class MusicStatsService {
 	//#region Properties
 	sortedData: Array<{title:string, artist:string}> = new Array();
 
-	uniqueTitles: Array<{}> = [];
+	uniqueTitles: Array<{title:string, artist: string}> = [];
 	uniqueArtists: Array<{}> = [];
 	//
 	totalTitles:string = '';
@@ -17,19 +17,15 @@ class MusicStatsService {
 	titlesSorted: Array<[string,string,number]> = [];
 
 	constructor(jsonFile:Array<{title:string, description:string}>, year:number) {
-
 		try {
 			this.sortRawData(jsonFile,year);
 			this.initSort();
 		} catch (error) {
-			console.log(error)
+			console.log("Error Sorting Data")
 		}
-		
 	}
-	
 
 	//#endregion
-
 	//#region Methods
 
 	initSort(): void {
@@ -40,39 +36,15 @@ class MusicStatsService {
 		this.sortTitles();
 	}
 
-	validate(type:string, file?: any): Boolean{
-		let result: Boolean;
-		switch (type) {
-			case "artist":
-				
-			break;
-		
-			case "title":
-					
-			break;
-
-			case "file":
-					
-			break;
-			
-			default:
-			result = false;
-			break;
-		}
-		return result;
-	}
-
-	static createObj(data){
-		let file;
+	static createObj(data): MyActivity{
+		let file: { title: string; description: string; }[];
 		try {
 			file = JSON.parse(data.file)
 		} catch (error) {
-			console.log(error)
+			console.log('Error Creating Object')
 		}
 
-		const year = data.year;
-
-		const statsObj = new MusicStatsService(file, year);
+		const statsObj = new MusicStatsService(file, data.year);
 
 		const activity: MyActivity = {
 			totalTitles : statsObj.uniqueTitles.length.toString(),
@@ -84,12 +56,17 @@ class MusicStatsService {
 			artistsSorted : statsObj.artistsSorted,
 			titlesSorted : statsObj.titlesSorted
 		};
-		return activity;
+
+		// if there are no titles, there will be no data to display. return null
+		if(activity.totalTitles === "0"){
+			return null;
+		}else {
+			return activity;
+		}
 	}
 
 	sortRawData(jsonFile:Array<{title:string, description:string}>,year: number): void {
 		const yearVar: string = year.toString();
-
 		jsonFile.forEach(element => {
 			if (element.hasOwnProperty('title')) {
 				if (JSON.stringify(element).includes(yearVar) 
@@ -107,10 +84,13 @@ class MusicStatsService {
 			if (!this.uniqueArtists.includes(item.artist)) {
 				this.uniqueArtists.push(item.artist);
 			}
-			if (!this.uniqueTitles.includes(item.title)) {
+
+			/// BROKEN: This always evaluates as true
+			// if (!this.uniqueTitles.includes({ title: item.title, artist: item.artist })) {
+			// 	this.uniqueTitles.push({ title: item.title, artist: item.artist });
+
+			if(!this.uniqueTitles.find(({title}) => title === item.title)){
 				this.uniqueTitles.push({ title: item.title, artist: item.artist });
-			}else{
-				console.log(item.title)
 			}
 		});
 	}
@@ -146,7 +126,7 @@ class MusicStatsService {
 		sortable.sort((a, b) => {
 			return b[1] - a[1];
 		});
-		sortable.length = 20;
+		sortable.length = sortable.length > 25 ? 25: sortable.length;
 		this.artistsSorted = sortable;
 	}
 
@@ -159,10 +139,10 @@ class MusicStatsService {
 		sortable.sort((a, b) => {
 			return b[2] - a[2];
 		});
-		sortable.length = 25;
+		sortable.length = sortable.length > 25 ? 25: sortable.length;
 		this.titlesSorted = sortable;
 	}
 	//#endregion
 }
 
-export {MusicStatsService as default}
+export { MusicStatsService as default }

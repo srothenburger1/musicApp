@@ -16,8 +16,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
 app.use(
     cors({
-      allowedHeaders: ["authorization", "Content-Type"], // you can change the headers
-      exposedHeaders: ["authorization"], // you can change the headers
+      allowedHeaders: ["authorization", "Content-Type"],
+      exposedHeaders: ["authorization"], 
       origin: "*",
       methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
       preflightContinue: false
@@ -37,7 +37,6 @@ app.post('/upload',upload.single('path'),(
         , res:{status:Function, send:Function}
         , next: any
         ) => {
-
         let payLoad: {id:string, file:string, year:string} = {
             id : req.body.id,
             file : '',
@@ -48,10 +47,8 @@ app.post('/upload',upload.single('path'),(
         if (err) throw err;
         payLoad.file = data
         userData = MusicStatsService.createObj(payLoad)
-        userData === null ? res.status(400): res.status(200).send(userData);
-        
+        userData === null ? res.status(400).send(null): res.status(200).send(userData);
         })
-
 } 
 );
 

@@ -36,7 +36,7 @@ app.post('/upload', upload.single('path'), function (req, res, next) {
             throw err;
         payLoad.file = data;
         userData = MusicStatsService_js_1["default"].createObj(payLoad);
-        userData === null ? res.status(400) : res.status(200).send(userData);
+        userData === null ? res.status(400).send(null) : res.status(200).send(userData);
     });
 });
 app.get('/', function (req, res) { return res.send("The list of options is /topsongs, /topartists, /allartistscount, /allsongscount"); });

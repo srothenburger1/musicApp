@@ -18,7 +18,7 @@ var MusicStatsService = /** @class */ (function () {
             this.initSort();
         }
         catch (error) {
-            console.log(error);
+            console.log("Error Sorting Data");
         }
     }
     //#endregion
@@ -30,31 +30,15 @@ var MusicStatsService = /** @class */ (function () {
         this.countTitles();
         this.sortTitles();
     };
-    MusicStatsService.prototype.validate = function (type, file) {
-        var result;
-        switch (type) {
-            case "artist":
-                break;
-            case "title":
-                break;
-            case "file":
-                break;
-            default:
-                result = false;
-                break;
-        }
-        return result;
-    };
     MusicStatsService.createObj = function (data) {
         var file;
         try {
             file = JSON.parse(data.file);
         }
         catch (error) {
-            console.log(error);
+            console.log('Error Creating Object');
         }
-        var year = data.year;
-        var statsObj = new MusicStatsService(file, year);
+        var statsObj = new MusicStatsService(file, data.year);
         var activity = {
             totalTitles: statsObj.uniqueTitles.length.toString(),
             totalArtists: statsObj.uniqueArtists.length.toString(),
@@ -63,7 +47,13 @@ var MusicStatsService = /** @class */ (function () {
             artistsSorted: statsObj.artistsSorted,
             titlesSorted: statsObj.titlesSorted
         };
-        return activity;
+        // if there are no titles, there will be no data to display. return null
+        if (activity.totalTitles === "0") {
+            return null;
+        }
+        else {
+            return activity;
+        }
     };
     MusicStatsService.prototype.sortRawData = function (jsonFile, year) {
         var _this = this;
@@ -84,13 +74,17 @@ var MusicStatsService = /** @class */ (function () {
             if (!_this.uniqueArtists.includes(item.artist)) {
                 _this.uniqueArtists.push(item.artist);
             }
-            if (!_this.uniqueTitles.includes(item.title)) {
+            /// BROKEN: This always evaluates as true
+            // if (!this.uniqueTitles.includes({ title: item.title, artist: item.artist })) {
+            // 	this.uniqueTitles.push({ title: item.title, artist: item.artist });
+            if (!_this.uniqueTitles.find(function (_a) {
+                var title = _a.title;
+                return title === item.title;
+            })) {
                 _this.uniqueTitles.push({ title: item.title, artist: item.artist });
             }
-            else {
-                console.log(item.title);
-            }
         });
+        // console.log(this.uniqueArtists)
     };
     /// Counts the number of times a song shows up in the list
     // If it isn't already in the list it will add the item.
@@ -123,7 +117,7 @@ var MusicStatsService = /** @class */ (function () {
         sortable.sort(function (a, b) {
             return b[1] - a[1];
         });
-        sortable.length = 20;
+        sortable.length = sortable.length > 25 ? 25 : sortable.length;
         this.artistsSorted = sortable;
     };
     MusicStatsService.prototype.sortTitles = function () {
@@ -134,8 +128,9 @@ var MusicStatsService = /** @class */ (function () {
         sortable.sort(function (a, b) {
             return b[2] - a[2];
         });
-        sortable.length = 25;
+        sortable.length = sortable.length > 25 ? 25 : sortable.length;
         this.titlesSorted = sortable;
+        console.log(this.titlesSorted);
     };
     return MusicStatsService;
 }());
