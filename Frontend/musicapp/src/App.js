@@ -11,15 +11,16 @@ import { CountsTable } from "./Tables/CountsTable";
 class App extends Component {
   constructor(){
     super();
-    this.state = {
-      data: null,
-      input: null,
-      file: null,
-      topSongsData: null,
-      topArtistsData: null,
-      allSongsCount: "0",
-      allArtistsCount: "0"
-    }
+    this.state = this.initState;
+  }
+   initState = {
+    data: null,
+    input: null,
+    file: null,
+    topSongsData: null,
+    topArtistsData: null,
+    allSongsCount: "0",
+    allArtistsCount: "0"
   }
   render(){
   return (
@@ -33,8 +34,8 @@ class App extends Component {
 
     />
     <br/>
-    {this.state.allSongsCount !== "0" 
-    && this.state.allArtistsCount !== "0"
+    {this.state.route !== "badData" 
+    && this.state.allSongsCount !== "0"
     ? <div>
     <CountsTable
       songCount = {this.state.allSongsCount}
@@ -42,7 +43,6 @@ class App extends Component {
 
     />
     </div>
-
     :<div></div>}
     <br/>
       {this.state.route === "topSongs" 
@@ -51,13 +51,12 @@ class App extends Component {
       : this.state.route === "topArtists" 
       && this.state.allArtistsCount !== "0" 
       ? <div><ArtistTable data={this.state.topArtistsData} title="Song"/></div>
-      : this.state.topSongsData == null
-      ? <div>No Data</div>
-      : <div>Invalid Input</div>
+      : this.state.route === "badData"
+      ? <div>Invalid Input</div>
+      : <div>No Data</div>
         }
     </div>
   );
-  
 }
 
 onRouteChange = route => {
@@ -65,29 +64,32 @@ onRouteChange = route => {
 }
 
   onUploadClick = event => {
-    let data = event.target.files[0];
+    this.setState(this.initState)
+    let file = event.target.files[0];
     var formData = new FormData();
     formData.append("id", "123");
     formData.append("year", "2019");
-    formData.append("path", data);    
+    formData.append("path", file);
     
-     axios.post("http://localhost:5000/upload", formData, { 
+    axios.post("http://localhost:5000/upload", formData, { 
     })
     .then(res => {
-      console.log(res.data);
+      console.log("Data: ", res.data);
       this.setState(
       {
        topArtistsData: res.data.artistsSorted
       , topSongsData: res.data.titlesSorted
       , allArtistsCount: res.data.totalArtists
       , allSongsCount: res.data.totalTitles
-      },
-      this.onRouteChange("topSongs")
+      }
       )
-    })   
+    this.onRouteChange("topSongs")
+    })
+    .catch(error => {
+      console.log(error)
+    this.onRouteChange("badData")
+    })
   };
-
-  
 }
 
 export default App;
