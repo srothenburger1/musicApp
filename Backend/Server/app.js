@@ -5,8 +5,8 @@ var express = require('express');
 var cors = require('cors');
 var bodyParser = require('body-parser');
 var multer = require('multer');
-var fs = require('fs');
-var upload = multer({ dest: 'uploads/' });
+var storage = multer.memoryStorage();
+var upload = multer({ storage: storage });
 var app = express();
 var port = 5000;
 var userData;
@@ -28,16 +28,12 @@ app.listen(port, function () { return console.log("Server running on port " + po
 app.post('/upload', upload.single('path'), function (req, res, next) {
     var payLoad = {
         id: req.body.id,
-        file: '',
+        file: req.file.buffer.toString(),
         year: req.body.year
     };
-    fs.readFile(req.file.path, 'utf8', function (err, data) {
-        if (err)
-            throw err;
-        payLoad.file = data;
-        userData = MusicStatsService_js_1["default"].createObj(payLoad);
-        userData === null ? res.status(400).send(null) : res.status(200).send(userData);
-    });
+    // payLoad.file = req.file.buffer.toString();
+    userData = MusicStatsService_js_1["default"].createObj(payLoad);
+    userData === null ? res.status(400).send(null) : res.status(200).send(userData);
 });
 app.get('/', function (req, res) { return res.send("The list of options is /topsongs, /topartists, /allartistscount, /allsongscount"); });
 app.post('/topsongs', function (req, res) {

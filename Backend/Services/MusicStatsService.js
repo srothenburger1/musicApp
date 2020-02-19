@@ -84,7 +84,6 @@ var MusicStatsService = /** @class */ (function () {
                 _this.uniqueTitles.push({ title: item.title, artist: item.artist });
             }
         });
-        // console.log(this.uniqueArtists)
     };
     /// Counts the number of times a song shows up in the list
     // If it isn't already in the list it will add the item.
@@ -130,7 +129,6 @@ var MusicStatsService = /** @class */ (function () {
         });
         sortable.length = sortable.length > 25 ? 25 : sortable.length;
         this.titlesSorted = sortable;
-        console.log(this.titlesSorted);
     };
     return MusicStatsService;
 }());

@@ -1,16 +1,18 @@
 import MusicStatsService from "../Services/MusicStatsService.js"
+import { MyActivity } from "../Interfaces/Models/IMyActivity.js";
 
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const multer = require('multer');
-const fs = require('fs');
 
-const upload = multer({ dest: 'uploads/' })
+var storage = multer.memoryStorage()
+var upload = multer({ storage: storage })
+
 const app = express();
 const port: number = 5000;
 
-let userData;
+let userData: MyActivity;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
@@ -33,22 +35,18 @@ next();
 app.listen(port, () => console.log(`Server running on port ${port}!`))
 
 app.post('/upload',upload.single('path'),(
-        req:{body:{id:string, year:string},file:{path:string}}
+        req:{body:{id:string, year:string},file:{buffer:Buffer}}
         , res:{status:Function, send:Function}
         , next: any
         ) => {
         let payLoad: {id:string, file:string, year:string} = {
             id : req.body.id,
-            file : '',
+            file : req.file.buffer.toString(),
             year : req.body.year
         }
 
-    fs.readFile(req.file.path, 'utf8', (err: ExceptionInformation, data:string) => {
-        if (err) throw err;
-        payLoad.file = data
-        userData = MusicStatsService.createObj(payLoad)
+        userData = MusicStatsService.createObj(payLoad);
         userData === null ? res.status(400).send(null): res.status(200).send(userData);
-        })
 } 
 );
 

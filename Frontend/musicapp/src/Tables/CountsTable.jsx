@@ -23,8 +23,8 @@ const CountsTable = ({songCount, artistCount}) => {
       <Table className={classes.table} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
-            <TableCell>Total different songs listened to</TableCell>
-            <TableCell align="right">Total different artists listened to</TableCell>
+            <TableCell>Total different songs</TableCell>
+            <TableCell align="right">Total different artists</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>      
