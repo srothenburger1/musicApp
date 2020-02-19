@@ -32,27 +32,26 @@ next();
 
 app.listen(port, () => console.log(`Server running on port ${port}!`))
 
-app.post(
-    '/upload'
-    ,upload.single('path')
-    ,(
+app.post('/upload',upload.single('path'),(
         req:{body:{id:string, year:string},file:{path:string}}
         , res:{status:Function, send:Function}
+        , next: any
         ) => {
 
-    let payLoad: {id:string, file:string, year:string} = {
-        id : req.body.id,
-        file : '',
-        year : req.body.year
-    }
+        let payLoad: {id:string, file:string, year:string} = {
+            id : req.body.id,
+            file : '',
+            year : req.body.year
+        }
 
     fs.readFile(req.file.path, 'utf8', (err: ExceptionInformation, data:string) => {
         if (err) throw err;
         payLoad.file = data
         userData = MusicStatsService.createObj(payLoad)
-
+        userData === null ? res.status(400): res.status(200).send(userData);
+        
         })
-        res.status(200).send(userData)
+
 } 
 );
 

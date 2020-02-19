@@ -17,9 +17,21 @@ class MusicStatsService {
 	titlesSorted: Array<[string,string,number]> = [];
 
 	constructor(jsonFile:Array<{title:string, description:string}>, year:number) {
-		this.sortRawData(jsonFile,year);
-		this.initSort();
+
+		try {
+			this.sortRawData(jsonFile,year);
+			this.initSort();
+		} catch (error) {
+			console.log(error)
+		}
+		
 	}
+	
+
+	//#endregion
+
+	//#region Methods
+
 	initSort(): void {
 		this.sortInfo();
 		this.countArtists();
@@ -28,12 +40,36 @@ class MusicStatsService {
 		this.sortTitles();
 	}
 
-	//#endregion
+	validate(type:string, file?: any): Boolean{
+		let result: Boolean;
+		switch (type) {
+			case "artist":
+				
+			break;
+		
+			case "title":
+					
+			break;
 
-	//#region Methods
+			case "file":
+					
+			break;
+			
+			default:
+			result = false;
+			break;
+		}
+		return result;
+	}
 
 	static createObj(data){
-		const file = JSON.parse(data.file)
+		let file;
+		try {
+			file = JSON.parse(data.file)
+		} catch (error) {
+			console.log(error)
+		}
+
 		const year = data.year;
 
 		const statsObj = new MusicStatsService(file, year);
@@ -80,7 +116,7 @@ class MusicStatsService {
 	}
 
 	/// Counts the number of times a song shows up in the list
-	// If it isnt already in the list it will add the item.
+	// If it isn't already in the list it will add the item.
 	countTitles(): void {
 		this.sortedData.forEach(item => {
 			if (!this.titleCount.hasOwnProperty(`${item.title} `)) {
@@ -92,7 +128,7 @@ class MusicStatsService {
 	}
 
 	/// Counts the number of times a artist shows up in the list
-	// If it isnt already in the list it will add the item.
+	// If it isn't already in the list it will add the item.
 	countArtists(): void {
 		this.sortedData.forEach(item => {
 			this.artistCount[`${item.artist} `] = !this.artistCount.hasOwnProperty(`${item.artist} `)

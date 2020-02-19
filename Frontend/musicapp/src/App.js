@@ -17,8 +17,8 @@ class App extends Component {
       file: null,
       topSongsData: null,
       topArtistsData: null,
-      allSongsCount: null,
-      allArtistsCount: null
+      allSongsCount: "0",
+      allArtistsCount: "0"
     }
   }
   render(){
@@ -33,8 +33,8 @@ class App extends Component {
 
     />
     <br/>
-    {this.state.allSongsCount != null 
-    && this.state.allArtistsCount != null
+    {this.state.allSongsCount !== "0" 
+    && this.state.allArtistsCount !== "0"
     ? <div>
     <CountsTable
       songCount = {this.state.allSongsCount}
@@ -46,12 +46,14 @@ class App extends Component {
     :<div></div>}
     <br/>
       {this.state.route === "topSongs" 
-      && this.state.topSongsData != null
+      && this.state.allSongsCount !== "0"
       ?<div><SongsTable data={this.state.topSongsData} title="Song"/></div>
       : this.state.route === "topArtists" 
-      && this.state.topArtistsData != null 
+      && this.state.allArtistsCount !== "0" 
       ? <div><ArtistTable data={this.state.topArtistsData} title="Song"/></div>
-      :<div>No Data</div>
+      : this.state.topSongsData == null
+      ? <div>No Data</div>
+      : <div>Invalid Input</div>
         }
     </div>
   );
@@ -71,16 +73,18 @@ onRouteChange = route => {
     
      axios.post("http://localhost:5000/upload", formData, { 
     })
-    .then(res => {console.log(res.data);this.setState({
+    .then(res => {
+      console.log(res.data);
+      this.setState(
+      {
        topArtistsData: res.data.artistsSorted
       , topSongsData: res.data.titlesSorted
       , allArtistsCount: res.data.totalArtists
       , allSongsCount: res.data.totalTitles
-    }
+      },
+      this.onRouteChange("topSongs")
       )
-    this.onRouteChange("topSongs")
-    }
-      )   
+    })   
   };
 
   

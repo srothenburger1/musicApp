@@ -13,9 +13,16 @@ var MusicStatsService = /** @class */ (function () {
         this.artistCount = {};
         this.artistsSorted = [];
         this.titlesSorted = [];
-        this.sortRawData(jsonFile, year);
-        this.initSort();
+        try {
+            this.sortRawData(jsonFile, year);
+            this.initSort();
+        }
+        catch (error) {
+            console.log(error);
+        }
     }
+    //#endregion
+    //#region Methods
     MusicStatsService.prototype.initSort = function () {
         this.sortInfo();
         this.countArtists();
@@ -23,10 +30,29 @@ var MusicStatsService = /** @class */ (function () {
         this.countTitles();
         this.sortTitles();
     };
-    //#endregion
-    //#region Methods
+    MusicStatsService.prototype.validate = function (type, file) {
+        var result;
+        switch (type) {
+            case "artist":
+                break;
+            case "title":
+                break;
+            case "file":
+                break;
+            default:
+                result = false;
+                break;
+        }
+        return result;
+    };
     MusicStatsService.createObj = function (data) {
-        var file = JSON.parse(data.file);
+        var file;
+        try {
+            file = JSON.parse(data.file);
+        }
+        catch (error) {
+            console.log(error);
+        }
         var year = data.year;
         var statsObj = new MusicStatsService(file, year);
         var activity = {
@@ -58,14 +84,16 @@ var MusicStatsService = /** @class */ (function () {
             if (!_this.uniqueArtists.includes(item.artist)) {
                 _this.uniqueArtists.push(item.artist);
             }
-            else {
-                console.log(item.artist);
-            }
             if (!_this.uniqueTitles.includes(item.title)) {
                 _this.uniqueTitles.push({ title: item.title, artist: item.artist });
             }
+            else {
+                console.log(item.title);
+            }
         });
     };
+    /// Counts the number of times a song shows up in the list
+    // If it isn't already in the list it will add the item.
     MusicStatsService.prototype.countTitles = function () {
         var _this = this;
         this.sortedData.forEach(function (item) {
@@ -77,6 +105,8 @@ var MusicStatsService = /** @class */ (function () {
             }
         });
     };
+    /// Counts the number of times a artist shows up in the list
+    // If it isn't already in the list it will add the item.
     MusicStatsService.prototype.countArtists = function () {
         var _this = this;
         this.sortedData.forEach(function (item) {

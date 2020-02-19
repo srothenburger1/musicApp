@@ -25,7 +25,7 @@ app.use(function (req, res, next) {
     next();
 });
 app.listen(port, function () { return console.log("Server running on port " + port + "!"); });
-app.post('/upload', upload.single('path'), function (req, res) {
+app.post('/upload', upload.single('path'), function (req, res, next) {
     var payLoad = {
         id: req.body.id,
         file: '',
@@ -36,8 +36,8 @@ app.post('/upload', upload.single('path'), function (req, res) {
             throw err;
         payLoad.file = data;
         userData = MusicStatsService_js_1["default"].createObj(payLoad);
+        userData === null ? res.status(400) : res.status(200).send(userData);
     });
-    res.status(200).send(userData);
 });
 app.get('/', function (req, res) { return res.send("The list of options is /topsongs, /topartists, /allartistscount, /allsongscount"); });
 app.post('/topsongs', function (req, res) {
