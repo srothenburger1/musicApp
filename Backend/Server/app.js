@@ -31,20 +31,6 @@ app.post('/upload', upload.single('path'), function (req, res, next) {
         file: req.file.buffer.toString(),
         year: req.body.year
     };
-    // payLoad.file = req.file.buffer.toString();
     userData = MusicStatsService_js_1["default"].createObj(payLoad);
     userData === null ? res.status(400).send(null) : res.status(200).send(userData);
-});
-app.get('/', function (req, res) { return res.send("The list of options is /topsongs, /topartists, /allartistscount, /allsongscount"); });
-app.post('/topsongs', function (req, res) {
-    res.send(userData[req.body.id].titlesSorted);
-});
-app.post('/topartists', function (req, res) {
-    res.send(userData[req.body.id].artistsSorted);
-});
-app.post('/allsongscount', function (req, res) {
-    res.send(userData[req.body.id].totalTitles);
-});
-app.post('/allartistscount', function (req, res) {
-    res.send(userData[req.body.id].totalArtists);
 });

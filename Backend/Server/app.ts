@@ -6,8 +6,8 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const multer = require('multer');
 
-var storage = multer.memoryStorage()
-var upload = multer({ storage: storage })
+const storage = multer.memoryStorage()
+const upload = multer({ storage: storage })
 
 const app = express();
 const port: number = 5000;
@@ -49,23 +49,3 @@ app.post('/upload',upload.single('path'),(
         userData === null ? res.status(400).send(null): res.status(200).send(userData);
 } 
 );
-
-app.get('/', (req:object, res:{send:Function}) => res.send(
-    "The list of options is /topsongs, /topartists, /allartistscount, /allsongscount"
-    ))
-
-app.post('/topsongs', (req:{body:{id:string}},res:{send:Function})=> {
-    res.send(userData[req.body.id].titlesSorted);
-})
-
-app.post('/topartists', (req:{body:{id:string}},res:{send:Function})=> {
-    res.send(userData[req.body.id].artistsSorted);
-})
-
-app.post('/allsongscount', (req:{body:{id:string}},res:{send:Function})=> {
-    res.send(userData[req.body.id].totalTitles);
-})
-
-app.post('/allartistscount', (req:{body:{id:string}},res:{send:Function})=> {
-    res.send(userData[req.body.id].totalArtists);
-})

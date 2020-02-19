@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /usr/share/yarn/bin/yarn.js add filereader
+  /usr/local/bin/node /usr/share/yarn/bin/yarn.js upgrade
 
 PATH: 
   /home/steven/bin:/usr/local/bin:/home/steven/development/flutter/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
@@ -14,7 +14,7 @@ Platform:
   linux x64
 
 Trace: 
-  Error: EACCES: permission denied, unlink '/home/steven/Documents/dev/musicApp/Backend/node_modules/append-field/.npmignore'
+  Error: EACCES: permission denied, unlink '/home/steven/Documents/dev/musicApp/Backend/node_modules/append-field/LICENSE'
 
 npm manifest: 
   {
@@ -22,6 +22,8 @@ npm manifest:
       "@types/node": "^13.5.1",
       "body-parser": "^1.19.0",
       "cors": "^2.8.5",
+      "filereader": "^0.10.3",
+      "fs": "^0.0.1-security",
       "json": "^9.0.6",
       "multer": "^1.4.2",
       "multipart": "^0.1.5",
@@ -137,6 +139,16 @@ Lockfile:
     version "1.1.1"
     resolved "https://registry.yarnpkg.com/ee-first/-/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"
     integrity sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=
+  
+  filereader@^0.10.3:
+    version "0.10.3"
+    resolved "https://registry.yarnpkg.com/filereader/-/filereader-0.10.3.tgz#c747d4a2cd8f61e5418a7c07fe1257a43f0acdb1"
+    integrity sha1-x0fUos2PYeVBinwH/hJXpD8KzbE=
+  
+  fs@^0.0.1-security:
+    version "0.0.1-security"
+    resolved "https://registry.yarnpkg.com/fs/-/fs-0.0.1-security.tgz#8a7bd37186b6dddf3813f23858b57ecaaf5e41d4"
+    integrity sha1-invTcYa23d84E/I4WLV+yq9eQdQ=
   
   http-errors@1.7.2:
     version "1.7.2"

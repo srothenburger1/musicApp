@@ -85,10 +85,6 @@ class MusicStatsService {
 				this.uniqueArtists.push(item.artist);
 			}
 
-			/// BROKEN: This always evaluates as true
-			// if (!this.uniqueTitles.includes({ title: item.title, artist: item.artist })) {
-			// 	this.uniqueTitles.push({ title: item.title, artist: item.artist });
-
 			if(!this.uniqueTitles.find(({title}) => title === item.title)){
 				this.uniqueTitles.push({ title: item.title, artist: item.artist });
 			}

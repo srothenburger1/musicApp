@@ -24,44 +24,44 @@ class App extends Component {
   }
   render(){
   return (
-    <div className="App">
-    <br/>
-    <SwipeableTemporaryDrawer
-      onUploadClick = {this.onUploadClick}
-      onTopSongsClick = {this.onTopSongsClick}
-      onTopArtistsClick = {this.onTopArtistsClick}
-      onRouteChange = {this.onRouteChange}
+      <div className="App">
+      <br/>
+      <SwipeableTemporaryDrawer
+        onUploadClick = {this.onUploadClick}
+        onTopSongsClick = {this.onTopSongsClick}
+        onTopArtistsClick = {this.onTopArtistsClick}
+        onRouteChange = {this.onRouteChange}
 
-    />
-    <br/>
-    {this.state.route !== "badData" 
-    && this.state.allSongsCount !== "0"
-    ? <div>
-    <CountsTable
-      songCount = {this.state.allSongsCount}
-      artistCount = {this.state.allArtistsCount}
-
-    />
-    </div>
-    :<div></div>}
-    <br/>
-      {this.state.route === "topSongs" 
+      />
+      <br/>
+      {this.state.route !== "badData" 
       && this.state.allSongsCount !== "0"
-      ?<div><SongsTable data={this.state.topSongsData} title="Song"/></div>
-      : this.state.route === "topArtists" 
-      && this.state.allArtistsCount !== "0" 
-      ? <div><ArtistTable data={this.state.topArtistsData} title="Song"/></div>
-      : this.state.route === "badData"
-      ? <div>Invalid Input</div>
-      : <div>No Data</div>
-        }
-    </div>
-  );
-}
+      ? <div>
+      <CountsTable
+        songCount = {this.state.allSongsCount}
+        artistCount = {this.state.allArtistsCount}
 
-onRouteChange = route => {
-  this.setState({route:route})
-}
+      />
+      </div>
+      :<div></div>}
+      <br/>
+        {this.state.route === "topSongs" 
+        && this.state.allSongsCount !== "0"
+        ?<div><SongsTable data={this.state.topSongsData} title="Song"/></div>
+        : this.state.route === "topArtists" 
+        && this.state.allArtistsCount !== "0" 
+        ? <div><ArtistTable data={this.state.topArtistsData} title="Song"/></div>
+        : this.state.route === "badData"
+        ? <div>Invalid Input</div>
+        : <div>No Data</div>
+          }
+      </div>
+    );
+  }
+
+  onRouteChange = route => {
+    this.setState({route:route})
+  }
 
   onUploadClick = event => {
     this.setState(this.initState)
