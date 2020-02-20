@@ -1,6 +1,7 @@
 "use strict";
 exports.__esModule = true;
 var MusicStatsService_js_1 = require("../Services/MusicStatsService.js");
+//#region Setup
 var express = require('express');
 var cors = require('cors');
 var bodyParser = require('body-parser');
@@ -24,6 +25,7 @@ app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
+//#endregion
 app.listen(port, function () { return console.log("Server running on port " + port + "!"); });
 app.post('/upload', upload.single('path'), function (req, res, next) {
     var payLoad = {

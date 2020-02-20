@@ -79,7 +79,7 @@ const SwipeableTemporaryDrawer = ({onUploadClick, onRouteChange}) => {
         onChange={onUploadClick}
         style={{display:"none"}}
       /> 
-      <Button onClick={toggleDrawer('top', true)}>Menu</Button>
+      <Button variant="contained" color="primary"  onClick={toggleDrawer('top', true)}>Menu</Button>
       <SwipeableDrawer
         anchor="top"
         open={state.top}

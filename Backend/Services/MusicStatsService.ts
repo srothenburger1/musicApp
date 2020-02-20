@@ -1,14 +1,12 @@
 import { MyActivity } from "../Interfaces/Models/IMyActivity";
 
 class MusicStatsService {
-
-	
 	//#region Properties
 	sortedData: Array<{title:string, artist:string}> = new Array();
 
 	uniqueTitles: Array<{title:string, artist: string}> = [];
 	uniqueArtists: Array<{}> = [];
-	//
+
 	totalTitles:string = '';
 	totalArtists:string = '';
 
@@ -17,7 +15,8 @@ class MusicStatsService {
 
 	artistsSorted: Array<[string,number]> = [];
 	titlesSorted: Array<[string,string,number]> = [];
-
+	//#endregion
+	//#region Constructors 
 	constructor(jsonFile:Array<{title:string, description:string}>, year:number) {
 		try {
 			this.sortRawData(jsonFile,year);
@@ -26,7 +25,6 @@ class MusicStatsService {
 			console.log("Error Sorting Data")
 		}
 	}
-
 	//#endregion
 	//#region Methods
 
@@ -38,7 +36,6 @@ class MusicStatsService {
 		this.sortTitles();
 	}
 
-	
 	static createObj(data): MyActivity{
 		let file: { title: string; description: string; }[];
 		try {

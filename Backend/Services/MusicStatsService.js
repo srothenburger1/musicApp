@@ -1,12 +1,13 @@
 "use strict";
 exports.__esModule = true;
 var MusicStatsService = /** @class */ (function () {
+    //#endregion
+    //#region Constructors 
     function MusicStatsService(jsonFile, year) {
         //#region Properties
         this.sortedData = new Array();
         this.uniqueTitles = [];
         this.uniqueArtists = [];
-        //
         this.totalTitles = '';
         this.totalArtists = '';
         this.titleCount = {};
@@ -74,9 +75,6 @@ var MusicStatsService = /** @class */ (function () {
             if (!_this.uniqueArtists.includes(item.artist)) {
                 _this.uniqueArtists.push(item.artist);
             }
-            /// BROKEN: This always evaluates as true
-            // if (!this.uniqueTitles.includes({ title: item.title, artist: item.artist })) {
-            // 	this.uniqueTitles.push({ title: item.title, artist: item.artist });
             if (!_this.uniqueTitles.find(function (_a) {
                 var title = _a.title;
                 return title === item.title;

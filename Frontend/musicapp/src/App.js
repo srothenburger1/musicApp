@@ -5,8 +5,7 @@ import axios from 'axios';
 import {SongsTable} from './Tables/SongsTable'
 import {ArtistTable} from './Tables/ArtistTable'
 import { CountsTable } from "./Tables/CountsTable";
-
-
+import ResponsiveDrawer from './Drawers/ResponsiveDrawer'
 
 class App extends Component {
   constructor(){
@@ -26,13 +25,11 @@ class App extends Component {
   return (
       <div className="App">
       <br/>
-      <SwipeableTemporaryDrawer
+      <ResponsiveDrawer
         onUploadClick = {this.onUploadClick}
-        onTopSongsClick = {this.onTopSongsClick}
-        onTopArtistsClick = {this.onTopArtistsClick}
         onRouteChange = {this.onRouteChange}
-
       />
+      <br/>
       <br/>
       {this.state.route !== "badData" 
       && this.state.allSongsCount !== "0"
@@ -40,7 +37,6 @@ class App extends Component {
       <CountsTable
         songCount = {this.state.allSongsCount}
         artistCount = {this.state.allArtistsCount}
-
       />
       </div>
       :<div></div>}

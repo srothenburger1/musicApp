@@ -1,6 +1,7 @@
 import MusicStatsService from "../Services/MusicStatsService.js"
 import { MyActivity } from "../Interfaces/Models/IMyActivity.js";
 
+//#region Setup
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -31,6 +32,8 @@ res.header("Access-Control-Allow-Origin", "*");
 res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 next();
 });
+
+//#endregion
 
 app.listen(port, () => console.log(`Server running on port ${port}!`))
 
