@@ -1,6 +1,8 @@
 import { MyActivity } from "../Interfaces/Models/IMyActivity";
 
 class MusicStatsService {
+
+	
 	//#region Properties
 	sortedData: Array<{title:string, artist:string}> = new Array();
 
@@ -36,6 +38,7 @@ class MusicStatsService {
 		this.sortTitles();
 	}
 
+	
 	static createObj(data): MyActivity{
 		let file: { title: string; description: string; }[];
 		try {
