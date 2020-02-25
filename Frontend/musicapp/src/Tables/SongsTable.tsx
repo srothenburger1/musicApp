@@ -15,33 +15,35 @@ const useStyles = makeStyles({
   },
 });
 
-function createData(artist, listens) {
-  return { artist, listens };
+function createData(song:any, artist:any, listens:any) {
+  return { song, artist, listens };
 }
 
-const ArtistTable = ({data}) => {
+const SongsTable = ({data}:any) => {
   const classes = useStyles();
-const rows = [];
+const rows:any = [];
 
-data.forEach(element => {
-  rows.push(createData(element[0],element[1]))
+data.forEach((element:any) => {
+  rows.push(createData(element[0],element[1], element[2]))
 });
   return (
     <div style={{display:"inline-block"}}>
     <TableContainer component={Paper} style={{ margin:"auto"}}>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
-          <TableRow>
-            <TableCell>Artist</TableCell>
+          <TableRow key = {"song"}>
+            <TableCell>Song</TableCell>
+            <TableCell align="right">Artist</TableCell>
             <TableCell align="right">Listens</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map(row => (
-            <TableRow key={row.artist}>
+          {rows.map((row:any) => (
+            <TableRow key={row.song}>
               <TableCell component="th" scope="row">
-                {row.artist}
+                {row.song}
               </TableCell>
+              <TableCell align="right">{row.artist}</TableCell>
               <TableCell align="right">{row.listens}</TableCell>
             </TableRow>
           ))}
@@ -52,4 +54,4 @@ data.forEach(element => {
   );
 }
 
-export {ArtistTable};
+export {SongsTable};

@@ -20,7 +20,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 const drawerWidth = 240;
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme:any) => ({
   root: {
     display: 'flex',
   },
@@ -52,7 +52,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const ResponsiveDrawer = (props) => {
+const ResponsiveDrawer:any = (props:any) => {
   const { container } = props;
   const classes = useStyles();
   const theme = useTheme();
@@ -92,7 +92,7 @@ const ResponsiveDrawer = (props) => {
     <div className={classes.root} style = {{padding:"1vh"}}>
     <input
         accept="JSON/*"
-        className={classes.input}
+        // className ={classes.input}
         id="contained-button-file1"
         multiple
         type="File"

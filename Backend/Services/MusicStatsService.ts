@@ -141,4 +141,4 @@ class MusicStatsService {
 	//#endregion
 }
 
-export { MusicStatsService as default }
+export default MusicStatsService

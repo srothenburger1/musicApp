@@ -14,7 +14,7 @@ const useStyles = makeStyles({
   },
 });
 
-const CountsTable = ({songCount, artistCount}) => {
+const CountsTable = ({songCount, artistCount}:any) => {
   const classes = useStyles();
 
   return (
