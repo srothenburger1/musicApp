@@ -1,5 +1,9 @@
 "use strict";
 exports.__esModule = true;
+var thing;
+(function (thing) {
+    thing[thing["thing"] = 0] = "thing";
+})(thing || (thing = {}));
 var MusicStatsService = /** @class */ (function () {
     //#endregion
     //#region Constructors 
@@ -95,6 +99,7 @@ var MusicStatsService = /** @class */ (function () {
                 _this.titleCount[item.title + " "][1] += 1;
             }
         });
+        console.log(this.titleCount);
     };
     /// Counts the number of times a artist shows up in the list
     // If it isn't already in the list it will add the item.

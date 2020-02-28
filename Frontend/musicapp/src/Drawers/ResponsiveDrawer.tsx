@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Divider from '@material-ui/core/Divider';
@@ -17,6 +17,7 @@ import ContactsIcon from '@material-ui/icons/Contacts'
 import MusicNoteIcon from '@material-ui/icons/MusicNote'
 import CloudUploadIcon from '@material-ui/icons/CloudUpload'
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { Routes } from "../Enums/Routes";
 
 const drawerWidth = 240;
 
@@ -52,7 +53,8 @@ const useStyles = makeStyles((theme:any) => ({
   },
 }));
 
-const ResponsiveDrawer:any = (props:any) => {
+const ResponsiveDrawer = (props:
+  {container?:any, onRouteChange:(...args: any[]) => void, onUploadClick:(...args: any[]) => void}) => {
   const { container } = props;
   const classes = useStyles();
   const theme = useTheme();
@@ -79,7 +81,7 @@ const ResponsiveDrawer:any = (props:any) => {
       <Divider />
       <List>
         {['Songs', 'Artists'].map((text, index) => (
-          <ListItem button key={text} onClick = {()=>{props.onRouteChange(index % 2 === 0 ? "topSongs" : "topArtists")}}>
+          <ListItem button key={text} onClick = {()=>{props.onRouteChange(index % 2 === 0 ? Routes.TopSongs : Routes.TopArtists)}}>
             <ListItemIcon>{index % 2 === 0 ? <MusicNoteIcon /> : <ContactsIcon />}</ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
@@ -92,7 +94,6 @@ const ResponsiveDrawer:any = (props:any) => {
     <div className={classes.root} style = {{padding:"1vh"}}>
     <input
         accept="JSON/*"
-        // className ={classes.input}
         id="contained-button-file1"
         multiple
         type="File"
@@ -151,12 +152,4 @@ const ResponsiveDrawer:any = (props:any) => {
   );
 }
 
-ResponsiveDrawer.propTypes = {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
-  container: PropTypes.any,
-};
-
-export default ResponsiveDrawer;
+export { ResponsiveDrawer }

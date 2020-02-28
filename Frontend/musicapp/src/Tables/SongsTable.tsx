@@ -7,6 +7,9 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import Song from '../Interfaces/Song'
+import { SongInput } from "../Interfaces/DataInputs";
+import "../index.css"
 
 const useStyles = makeStyles({
   table: {
@@ -15,19 +18,20 @@ const useStyles = makeStyles({
   },
 });
 
-function createData(song:any, artist:any, listens:any) {
-  return { song, artist, listens };
+function createSongData(title:string, artist:string, numberOfListens:string):Song {
+  return { title, artist, numberOfListens };
 }
 
-const SongsTable = ({data}:any) => {
+const SongsTable = ({data}:SongInput) => {
   const classes = useStyles();
-const rows:any = [];
+  const songs:Array<Song> = [];
 
-data.forEach((element:any) => {
-  rows.push(createData(element[0],element[1], element[2]))
-});
+  data.forEach((item:string[]) => {
+    songs.push(createSongData(item[0],item[1], item[2]))
+    });
+
   return (
-    <div style={{display:"inline-block"}}>
+    <div className="customTable">
     <TableContainer component={Paper} style={{ margin:"auto"}}>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
@@ -38,13 +42,13 @@ data.forEach((element:any) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row:any) => (
-            <TableRow key={row.song}>
+          {songs.map((song:Song) => (
+            <TableRow key={song.title}>
               <TableCell component="th" scope="row">
-                {row.song}
+                {song.title}
               </TableCell>
-              <TableCell align="right">{row.artist}</TableCell>
-              <TableCell align="right">{row.listens}</TableCell>
+              <TableCell align="right">{song.artist}</TableCell>
+              <TableCell align="right">{song.numberOfListens}</TableCell>
             </TableRow>
           ))}
         </TableBody>

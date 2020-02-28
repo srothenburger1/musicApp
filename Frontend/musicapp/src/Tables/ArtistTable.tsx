@@ -7,6 +7,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import Artist from '../Interfaces/Artist'
+import { ArtistInput } from "../Interfaces/DataInputs";
 
 const useStyles = makeStyles({
   table: {
@@ -15,19 +17,19 @@ const useStyles = makeStyles({
   },
 });
 
-function createData(artist:any, listens:any) {
-  return { artist, listens };
+function createArtistData(name:string, numberOfListens:string): Artist {
+  return { name, numberOfListens };
 }
 
-const ArtistTable = ({data}:any) => {
-  const classes = useStyles();
-const rows:any = [];
+const ArtistTable = ({data}:ArtistInput) => {
+  const classes:Record<"table", string> = useStyles();
+  const artists:Array<Artist> = [];
 
-data.forEach((element:any) => {
-  rows.push(createData(element[0],element[1]))
+data.forEach((item:Array<string>) => {
+  artists.push(createArtistData(item[0],item[1]))
 });
   return (
-    <div style={{display:"inline-block"}}>
+    <div className="customTable">
     <TableContainer component={Paper} style={{ margin:"auto"}}>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
@@ -37,12 +39,12 @@ data.forEach((element:any) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row:any) => (
-            <TableRow key={row.artist}>
+          {artists.map((artist:Artist) => (
+            <TableRow key={artist.name}>
               <TableCell component="th" scope="row">
-                {row.artist}
+                {artist.name}
               </TableCell>
-              <TableCell align="right">{row.listens}</TableCell>
+              <TableCell align="right">{artist.numberOfListens}</TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -52,4 +54,4 @@ data.forEach((element:any) => {
   );
 }
 
-export {ArtistTable};
+export { ArtistTable };

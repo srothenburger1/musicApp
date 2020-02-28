@@ -1,8 +1,12 @@
 import { MyActivity } from "../Interfaces/Models/IMyActivity";
 
+ enum thing {
+	thing
+}
+
 class MusicStatsService {
 	//#region Properties
-	sortedData: Array<{title:string, artist:string}> = new Array();
+	public sortedData: Array<{title:string, artist:string}> = new Array();
 
 	uniqueTitles: Array<{title:string, artist: string}> = [];
 	uniqueArtists: Array<{}> = [];
