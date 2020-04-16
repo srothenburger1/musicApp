@@ -15,6 +15,6 @@
     "xmlhttprequest": "^1.8.0"
   },
   "scripts": {
-    "start": "tsc ./Services/*.ts && tsc ./Server/*.ts && node ./Server/app.js "
+    "start": "tsc ./Services/*.ts && tsc ./Server/*.ts && nodemon ./Server/app.js "
   }
 }
