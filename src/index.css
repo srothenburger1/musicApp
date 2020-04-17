@@ -12,5 +12,6 @@ code {
     monospace;
 }
 .customTable {
-  display:inline-block
+  max-width: 90%;
+  display: inline-block;
 }

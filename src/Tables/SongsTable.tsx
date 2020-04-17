@@ -13,9 +13,9 @@ import "../index.css"
 
 const useStyles = makeStyles({
   table: {
-    minWidth: 650,
-    maxWidth:650
-  },
+    maxWidth: "90%",
+    display: "block",
+    },
 });
 
 function createSongData(title:string, artist:string, numberOfListens:string):Song {
@@ -33,7 +33,7 @@ const SongsTable = ({data}:SongInput) => {
   return (
     <div className="customTable">
     <TableContainer component={Paper} style={{ margin:"auto"}}>
-      <Table className={classes.table} aria-label="simple table">
+      <Table className={classes.table} aria-label="Song Table">
         <TableHead>
           <TableRow key = {"song"}>
             <TableCell>Song</TableCell>
@@ -47,7 +47,7 @@ const SongsTable = ({data}:SongInput) => {
               <TableCell component="th" scope="row">
                 {song.title}
               </TableCell>
-              <TableCell align="right">{song.artist}</TableCell>
+              <TableCell  align="right">{song.artist}</TableCell>
               <TableCell align="right">{song.numberOfListens}</TableCell>
             </TableRow>
           ))}
