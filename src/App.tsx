@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import axios, { AxiosResponse } from 'axios';
 import { SongsTable } from './Tables/SongsTable'
@@ -14,6 +14,17 @@ export default function App() {
         ,[AllArtistsCount, setAllArtistsCount] = useState("0")
         ,[Route, setRoute] = useState(Routes.Home);
   
+  useEffect(() => {
+  
+    if(localStorage.getItem('musicData')){
+      const data = JSON.parse(localStorage.getItem('musicData') as string);
+      setTopArtistsData(data.artistsSorted);
+      setTopSongsData(data.titlesSorted);
+      setAllArtistsCount(data.totalArtists);
+      setAllSongsCount(data.totalTitles);
+      setRoute(Routes.TopSongs)
+    }
+  },[])
 
   const onUploadClick = (event: any): void => {
     let file = (event.target).files[0];
@@ -29,6 +40,8 @@ export default function App() {
       setTopSongsData(res.data.titlesSorted);
       setAllArtistsCount(res.data.totalArtists);
       setAllSongsCount(res.data.totalTitles);
+      localStorage.clear();
+      localStorage.setItem('musicData', JSON.stringify(res.data));
       setRoute(Routes.TopSongs)
     })
     .catch((error:Error) => {
