@@ -52,18 +52,22 @@ export default function App() {
 
   return (
   <div className="App">
+    
       <ResponsiveDrawer
         onUploadClick = {onUploadClick}
         onRouteChange = {setRoute}
       />
+
       {
       Route !== Routes.BadData 
       && AllSongsCount !== "0"
       ? <div style = {{"paddingTop":"4rem"}}>
+
       <CountsTable
         songCount = {AllSongsCount!}
         artistCount = {AllArtistsCount!}
       />
+      
       </div>
       :<div style = {{"paddingTop":"40rem"}}></div>
       }
