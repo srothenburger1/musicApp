@@ -33,7 +33,7 @@ export default function App() {
     formData.append("year", "2019");
     formData.append("path", file);
     
-    axios.post("http://localhost:5000/upload", formData, { 
+    axios.post(" https://mighty-taiga-81224.herokuapp.com/upload", formData, { 
     })
     .then((res:AxiosResponse<any>) => {  
       setTopArtistsData(res.data.artistsSorted);
