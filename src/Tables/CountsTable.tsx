@@ -11,9 +11,7 @@ import Counts from '../Interfaces/Counts'
 
 const useStyles = makeStyles({
   table: {
-    minWidth: '100%'
-    // maxWidth: '90%',
-    // display:'blocker'
+    minWidth: 650,
   },
 });
 
