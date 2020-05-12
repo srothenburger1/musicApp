@@ -18,6 +18,7 @@ import MusicNoteIcon from '@material-ui/icons/MusicNote'
 import CloudUploadIcon from '@material-ui/icons/CloudUpload'
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Routes } from "../Enums/Routes";
+import GoogleBtn from '../GoogleSignIn';
 
 const drawerWidth = 240;
 
@@ -86,6 +87,7 @@ const ResponsiveDrawer = (props:
             <ListItemText primary={text} />
           </ListItem>
         ))}
+        <GoogleBtn/>
       </List>
     </div>
   );

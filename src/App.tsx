@@ -6,13 +6,14 @@ import { ArtistTable } from './Tables/ArtistTable'
 import { CountsTable } from "./Tables/CountsTable";
 import { ResponsiveDrawer } from './Drawers/ResponsiveDrawer'
 import { Routes } from "./Enums/Routes";
+import  GoogleBtn  from "./GoogleSignIn";
 
 export default function App() {
   const [TopSongsData, setTopSongsData] = useState(null)
         ,[TopArtistsData, setTopArtistsData] = useState(null)
         ,[AllSongsCount, setAllSongsCount] = useState("0")
         ,[AllArtistsCount, setAllArtistsCount] = useState("0")
-        ,[Route, setRoute] = useState(Routes.Home);
+        ,[Route, setRoute] = useState(Routes.SignIn);
   
   useEffect(() => {
   
@@ -56,9 +57,11 @@ export default function App() {
         onUploadClick = {onUploadClick}
         onRouteChange = {setRoute}
       />
+      <GoogleBtn/>
       {
       Route !== Routes.BadData 
       && AllSongsCount !== "0"
+      && Route !== Routes.SignIn
       ? <div style = {{"paddingTop":"4rem"}}>
       <CountsTable
         songCount = {AllSongsCount!}
@@ -68,7 +71,9 @@ export default function App() {
       :<div style = {{"paddingTop":"40rem"}}></div>
       }
       <br/>
-        {Route === Routes.TopSongs 
+        {
+        Route === Routes.SignIn ? <GoogleBtn/>
+        :Route === Routes.TopSongs 
         && AllSongsCount !== "0"
         ?<div><SongsTable data={TopSongsData!}/></div>
         : Route === Routes.TopArtists 
@@ -76,7 +81,9 @@ export default function App() {
         ? <div><ArtistTable data={TopArtistsData!}/></div>
         : Route === Routes.BadData
         ? <div>Invalid Input</div>
-        : <div>No Data</div>
+        
+        
+        :<div>No Data</div>
           }
       </div>
   ); 

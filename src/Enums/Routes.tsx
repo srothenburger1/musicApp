@@ -3,4 +3,5 @@ export enum Routes {
     ,BadData
     ,TopSongs
     ,TopArtists
+    ,SignIn
   }
