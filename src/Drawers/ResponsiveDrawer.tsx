@@ -1,47 +1,47 @@
-import React from 'react';
+import React from "react";
 // import PropTypes from 'prop-types';
-import AppBar from '@material-ui/core/AppBar';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Divider from '@material-ui/core/Divider';
-import Drawer from '@material-ui/core/Drawer';
-import Hidden from '@material-ui/core/Hidden';
-import IconButton from '@material-ui/core/IconButton';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import MenuIcon from '@material-ui/icons/Menu';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import ContactsIcon from '@material-ui/icons/Contacts'
-import MusicNoteIcon from '@material-ui/icons/MusicNote'
-import CloudUploadIcon from '@material-ui/icons/CloudUpload'
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { Routes } from "../Enums/Routes";
-import GoogleBtn from '../GoogleSignIn';
+import AppBar from "@material-ui/core/AppBar";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Divider from "@material-ui/core/Divider";
+import Drawer from "@material-ui/core/Drawer";
+import Hidden from "@material-ui/core/Hidden";
+import IconButton from "@material-ui/core/IconButton";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import MenuIcon from "@material-ui/icons/Menu";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import ContactsIcon from "@material-ui/icons/Contacts";
+import MusicNoteIcon from "@material-ui/icons/MusicNote";
+import CloudUploadIcon from "@material-ui/icons/CloudUpload";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
+import GoogleBtn from "../GoogleSignIn";
+import { Link } from "react-router-dom";
 
 const drawerWidth = 240;
 
-const useStyles = makeStyles((theme:any) => ({
+const useStyles = makeStyles((theme: any) => ({
   root: {
-    display: 'flex',
+    display: "flex",
   },
   drawer: {
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up("sm")]: {
       width: drawerWidth,
       flexShrink: 0,
     },
   },
   appBar: {
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up("sm")]: {
       width: `calc(100% - ${drawerWidth}px)`,
       marginLeft: drawerWidth,
     },
   },
   menuButton: {
     marginRight: theme.spacing(2),
-    [theme.breakpoints.up('sm')]: {
-      display: 'none',
+    [theme.breakpoints.up("sm")]: {
+      display: "none",
     },
   },
   toolbar: theme.mixins.toolbar,
@@ -54,8 +54,10 @@ const useStyles = makeStyles((theme:any) => ({
   },
 }));
 
-const ResponsiveDrawer = (props:
-  {container?:any, onRouteChange:(...args: any[]) => void, onUploadClick:(...args: any[]) => void}) => {
+const ResponsiveDrawer = (props: {
+  container?: any;
+  onUploadClick: (...args: any[]) => void;
+}) => {
   const { container } = props;
   const classes = useStyles();
   const theme = useTheme();
@@ -70,38 +72,45 @@ const ResponsiveDrawer = (props:
       <div className={classes.toolbar} />
       <Divider />
       <List>
-        {['Upload'].map((text, index) => (
-            <label key = {text} htmlFor="contained-button-file1">
-          <ListItem button key={text}>
-            <ListItemIcon>{<CloudUploadIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
+        {["Upload"].map((text, index) => (
+          <label key={text} htmlFor="contained-button-file1">
+            <ListItem button key={text}>
+              <ListItemIcon>{<CloudUploadIcon />}</ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
           </label>
         ))}
       </List>
       <Divider />
       <List>
-        {['Songs', 'Artists'].map((text, index) => (
-          <ListItem button key={text} onClick = {()=>{props.onRouteChange(index % 2 === 0 ? Routes.TopSongs : Routes.TopArtists)}}>
-            <ListItemIcon>{index % 2 === 0 ? <MusicNoteIcon /> : <ContactsIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
+        {["Songs", "Artists"].map((text, index) => (
+          <Link
+            to={index % 2 === 0 ? "/Songs" : "/Artists"}
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            <ListItem button key={text}>
+              <ListItemIcon>
+                {index % 2 === 0 ? <MusicNoteIcon /> : <ContactsIcon />}
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+          </Link>
         ))}
-        <GoogleBtn/>
+        <GoogleBtn />
       </List>
     </div>
   );
 
   return (
-    <div className={classes.root} style = {{padding:"1vh"}}>
-    <input
+    <div className={classes.root} style={{ padding: "1vh" }}>
+      <input
         accept="JSON/*"
         id="contained-button-file1"
         multiple
         type="File"
         onChange={props.onUploadClick}
-        style={{display:"none"}}
-      /> 
+        style={{ display: "none" }}
+      />
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
@@ -125,7 +134,7 @@ const ResponsiveDrawer = (props:
           <Drawer
             container={container}
             variant="temporary"
-            anchor={theme.direction === 'rtl' ? 'right' : 'left'}
+            anchor={theme.direction === "rtl" ? "right" : "left"}
             open={mobileOpen}
             onClose={handleDrawerToggle}
             classes={{
@@ -152,6 +161,6 @@ const ResponsiveDrawer = (props:
       </nav>
     </div>
   );
-}
+};
 
-export { ResponsiveDrawer }
+export { ResponsiveDrawer };

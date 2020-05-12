@@ -1,91 +1,81 @@
-import React, { useState, useEffect } from 'react';
-import './App.css';
-import axios, { AxiosResponse } from 'axios';
-import { SongsTable } from './Tables/SongsTable'
-import { ArtistTable } from './Tables/ArtistTable'
+import React, { useState, useEffect } from "react";
+import "./App.css";
+import axios, { AxiosResponse } from "axios";
+import { SongsTable } from "./Tables/SongsTable";
+import { ArtistTable } from "./Tables/ArtistTable";
 import { CountsTable } from "./Tables/CountsTable";
-import { ResponsiveDrawer } from './Drawers/ResponsiveDrawer'
-import { Routes } from "./Enums/Routes";
-import  GoogleBtn  from "./GoogleSignIn";
-//
+import { ResponsiveDrawer } from "./Drawers/ResponsiveDrawer";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
 
 export default function App() {
-  const [TopSongsData, setTopSongsData] = useState(null)
-        ,[TopArtistsData, setTopArtistsData] = useState(null)
-        ,[AllSongsCount, setAllSongsCount] = useState("0")
-        ,[AllArtistsCount, setAllArtistsCount] = useState("0")
-        ,[Route, setRoute] = useState(Routes.SignIn);
-  
+  const [TopSongsData, setTopSongsData] = useState(null),
+    [TopArtistsData, setTopArtistsData] = useState(null),
+    [AllSongsCount, setAllSongsCount] = useState("0"),
+    [AllArtistsCount, setAllArtistsCount] = useState("0");
+
   useEffect(() => {
-  
-    if(localStorage.getItem('musicData')){
-      const data = JSON.parse(localStorage.getItem('musicData') as string);
+    if (localStorage.getItem("musicData")) {
+      const data = JSON.parse(localStorage.getItem("musicData") as string);
       setTopArtistsData(data.artistsSorted);
       setTopSongsData(data.titlesSorted);
       setAllArtistsCount(data.totalArtists);
       setAllSongsCount(data.totalTitles);
-      setRoute(Routes.TopSongs)
     }
-  },[])
+  }, []);
 
-  const onUploadClick = (event: any): void => {
-    let file = (event.target).files[0];
+  const onUploadClick = async (event: any) => {
     let formData: FormData = new FormData();
     formData.append("id", "123");
     formData.append("year", "2019");
-    formData.append("path", file);
-    
-    axios.post(" https://mighty-taiga-81224.herokuapp.com/upload", formData, { 
-    })
-    .then((res:AxiosResponse<any>) => {  
-      setTopArtistsData(res.data.artistsSorted);
-      setTopSongsData(res.data.titlesSorted);
-      setAllArtistsCount(res.data.totalArtists);
-      setAllSongsCount(res.data.totalTitles);
+    formData.append("path", event.target.files[0]);
+
+    const result = await axios.post(
+      " https://mighty-taiga-81224.herokuapp.com/upload",
+      formData,
+      {}
+    );
+    try {
+      setTopArtistsData(result.data.artistsSorted);
+      setTopSongsData(result.data.titlesSorted);
+      setAllArtistsCount(result.data.totalArtists);
+      setAllSongsCount(result.data.totalTitles);
       localStorage.clear();
-      localStorage.setItem('musicData', JSON.stringify(res.data));
-      setRoute(Routes.TopSongs)
-    })
-    .catch((error:Error) => {
-      console.log(error)
-    setRoute(Routes.BadData)
-    })
+      localStorage.setItem("musicData", JSON.stringify(result.data));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
-  <div className="App">
-      <ResponsiveDrawer
-        onUploadClick = {onUploadClick}
-        onRouteChange = {setRoute}
-      />
-      <GoogleBtn/>
-      {
-      Route !== Routes.BadData 
-      && AllSongsCount !== "0"
-      && Route !== Routes.SignIn
-      ? <div style = {{"paddingTop":"4rem"}}>
-      <CountsTable
-        songCount = {AllSongsCount!}
-        artistCount = {AllArtistsCount!}
-      />
-      </div>
-      :<div style = {{"paddingTop":"40rem"}}></div>
-      }
-      <br/>
-        {
-        Route === Routes.SignIn ? <GoogleBtn/>
-        :Route === Routes.TopSongs 
-        && AllSongsCount !== "0"
-        ?<div><SongsTable data={TopSongsData!}/></div>
-        : Route === Routes.TopArtists 
-        && TopArtistsData !== null 
-        ? <div><ArtistTable data={TopArtistsData!}/></div>
-        : Route === Routes.BadData
-        ? <div>Invalid Input</div>
-        
-        
-        :<div>No Data</div>
-          }
-      </div>
-  ); 
-  }
+    <div className="App">
+      <Router>
+        <ResponsiveDrawer onUploadClick={onUploadClick} />
+
+        {AllSongsCount !== "0" ? (
+          <div style={{ paddingTop: "4rem" }}>
+            <CountsTable
+              songCount={AllSongsCount!}
+              artistCount={AllArtistsCount!}
+            />
+          </div>
+        ) : (
+          <div style={{ paddingTop: "40rem" }}></div>
+        )}
+        <Switch>
+          <Route path="/Artists">
+            {TopArtistsData !== null ? (
+              <ArtistTable data={TopArtistsData!} />
+            ) : null}
+          </Route>
+          <Route path="/Songs">
+            {AllSongsCount !== "0" ? <SongsTable data={TopSongsData!} /> : null}
+          </Route>
+        </Switch>
+      </Router>
+    </div>
+  );
+}
