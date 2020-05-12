@@ -4,14 +4,21 @@ import axios from 'axios';
 import { SongsTable } from './Tables/SongsTable';
 import { ArtistTable } from './Tables/ArtistTable';
 import { CountsTable } from './Tables/CountsTable';
+import LoadingCircle from './LoadingCircle';
 import { ResponsiveDrawer } from './Drawers/ResponsiveDrawer';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import {
+	BrowserRouter as Router,
+	Switch,
+	Route,
+	useHistory,
+} from 'react-router-dom';
 
-export function App() {
+export const App = () => {
 	const [TopSongsData, setTopSongsData] = useState(null),
 		[TopArtistsData, setTopArtistsData] = useState(null),
 		[AllSongsCount, setAllSongsCount] = useState('0'),
 		[AllArtistsCount, setAllArtistsCount] = useState('0');
+	let history = useHistory();
 
 	useEffect(() => {
 		if (localStorage.getItem('musicData')) {
@@ -44,6 +51,7 @@ export function App() {
 		} catch (error) {
 			console.log(error);
 		}
+		return result;
 	};
 
 	return (
@@ -60,6 +68,16 @@ export function App() {
 					</div>
 				) : null}
 				<Switch>
+					<Route path="/Loading">
+						<>
+							<br />
+							<br />
+							<br />
+							<br />
+							<br />
+							<LoadingCircle />
+						</>
+					</Route>
 					<Route path="/Artists">
 						{TopArtistsData !== null ? (
 							<ArtistTable data={TopArtistsData!} />
@@ -73,4 +91,4 @@ export function App() {
 			</Router>
 		</div>
 	);
-}
+};
