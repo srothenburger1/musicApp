@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "description": "An app that analyzes google play music habits.",
-  "main": "dist/app.js",
   "author": "Steven Rothenburger",
   "license": "MIT",
   "engines": {
