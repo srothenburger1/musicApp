@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme: any) => ({
   },
 }));
 
-const ResponsiveDrawer = (props: {
+export const ResponsiveDrawer = (props: {
   container?: any;
   onUploadClick: (...args: any[]) => void;
 }) => {
@@ -163,4 +163,3 @@ const ResponsiveDrawer = (props: {
   );
 };
 
-export { ResponsiveDrawer };
