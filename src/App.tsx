@@ -6,19 +6,13 @@ import { ArtistTable } from './Tables/ArtistTable';
 import { CountsTable } from './Tables/CountsTable';
 import LoadingCircle from './LoadingCircle';
 import { ResponsiveDrawer } from './Drawers/ResponsiveDrawer';
-import {
-	BrowserRouter as Router,
-	Switch,
-	Route,
-	useHistory,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 export const App = () => {
 	const [TopSongsData, setTopSongsData] = useState(null),
 		[TopArtistsData, setTopArtistsData] = useState(null),
 		[AllSongsCount, setAllSongsCount] = useState('0'),
 		[AllArtistsCount, setAllArtistsCount] = useState('0');
-	let history = useHistory();
 
 	useEffect(() => {
 		if (localStorage.getItem('musicData')) {
@@ -51,22 +45,17 @@ export const App = () => {
 		} catch (error) {
 			console.log(error);
 		}
-		return result;
+		if (result) {
+			return 0;
+		} else {
+			return 1;
+		}
 	};
 
 	return (
 		<div className="App">
 			<Router>
 				<ResponsiveDrawer onUploadClick={onUploadClick} />
-
-				{AllSongsCount !== '0' ? (
-					<div style={{ paddingTop: '4rem' }}>
-						<CountsTable
-							songCount={AllSongsCount!}
-							artistCount={AllArtistsCount!}
-						/>
-					</div>
-				) : null}
 				<Switch>
 					<Route path="/Loading">
 						<>
@@ -78,13 +67,31 @@ export const App = () => {
 							<LoadingCircle />
 						</>
 					</Route>
-					<Route path="/Artists">
+					<Route path="/Data/Artists">
 						{TopArtistsData !== null ? (
-							<ArtistTable data={TopArtistsData!} />
+							<>
+								<div style={{ paddingTop: '4rem' }}>
+									<CountsTable
+										songCount={AllSongsCount!}
+										artistCount={AllArtistsCount!}
+									/>
+								</div>
+								<ArtistTable data={TopArtistsData!} />
+							</>
 						) : null}
 					</Route>
-					<Route path="/Songs">
-						{AllSongsCount !== '0' ? <SongsTable data={TopSongsData!} /> : null}
+					<Route path="/Data/Songs">
+						{AllSongsCount !== '0' ? (
+							<>
+								<div style={{ paddingTop: '4rem' }}>
+									<CountsTable
+										songCount={AllSongsCount!}
+										artistCount={AllArtistsCount!}
+									/>
+								</div>
+								<SongsTable data={TopSongsData!} />{' '}
+							</>
+						) : null}
 					</Route>
 					<Route path="/Login"></Route>
 				</Switch>

@@ -1,5 +1,4 @@
-import React from 'react';
-// import PropTypes from 'prop-types';
+import React, { ChangeEvent } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Divider from '@material-ui/core/Divider';
@@ -56,7 +55,7 @@ const useStyles = makeStyles((theme: any) => ({
 
 export const ResponsiveDrawer = (props: {
 	container?: any;
-	onUploadClick: (...args: any[]) => void;
+	onUploadClick: (...args: any[]) => Promise<number>;
 }) => {
 	const { container } = props;
 	const classes = useStyles();
@@ -66,6 +65,19 @@ export const ResponsiveDrawer = (props: {
 
 	const handleDrawerToggle = () => {
 		setMobileOpen(!mobileOpen);
+	};
+
+	// This is pretty hacky but useHistory cant be used outside the parent route
+
+	const onChange = async (e: ChangeEvent) => {
+		history.push('/Loading');
+		const requestSucceeded = await props.onUploadClick(e);
+
+		if (requestSucceeded === 0) {
+			history.push('/Data/Songs');
+		} else {
+			history.push('/BadData');
+		}
 	};
 
 	const drawer = (
@@ -86,7 +98,7 @@ export const ResponsiveDrawer = (props: {
 			<List>
 				{['Songs', 'Artists'].map((text, index) => (
 					<Link
-						to={index % 2 === 0 ? '/Songs' : '/Artists'}
+						to={index % 2 === 0 ? '/Data/Songs' : '/Data/Artists'}
 						style={{ textDecoration: 'none', color: 'inherit' }}>
 						<ListItem button key={text}>
 							<ListItemIcon>
@@ -108,12 +120,7 @@ export const ResponsiveDrawer = (props: {
 				id="contained-button-file1"
 				multiple
 				type="File"
-				// This is pretty hacky but useHistory cant be used outside the parent route
-				onChange={async (e) => {
-					history.push('/Loading');
-					await props.onUploadClick(e);
-					history.push('/Songs');
-				}}
+				onChange={onChange}
 				style={{ display: 'none' }}
 			/>
 			<CssBaseline />
