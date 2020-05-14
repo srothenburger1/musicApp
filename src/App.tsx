@@ -7,6 +7,7 @@ import { CountsTable } from './Tables/CountsTable';
 import LoadingCircle from './LoadingCircle';
 import { ResponsiveDrawer } from './Drawers/ResponsiveDrawer';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { HelpComp } from './HelpComp';
 
 export const App = () => {
 	const [TopSongsData, setTopSongsData] = useState(null),
@@ -54,7 +55,8 @@ export const App = () => {
 
 	return (
 		<div className="App">
-			<Router>
+			<HelpComp />
+			{/* <Router>
 				<ResponsiveDrawer onUploadClick={onUploadClick} />
 				<Switch>
 					<Route path="/Loading">
@@ -95,7 +97,7 @@ export const App = () => {
 					</Route>
 					<Route path="/Login"></Route>
 				</Switch>
-			</Router>
+			</Router> */}
 		</div>
 	);
 };
