@@ -5,6 +5,9 @@ import { SongsTable } from './Tables/SongsTable';
 import { ArtistTable } from './Tables/ArtistTable';
 import { CountsTable } from './Tables/CountsTable';
 import LoadingCircle from './LoadingCircle';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import AppBar from '@material-ui/core/AppBar';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { HelpComp } from './HelpComp';
 import LabelBottomNavigation from './BottomNav';
@@ -55,9 +58,12 @@ export const App = () => {
 
 	return (
 		<div className="App">
-			{/* <HelpComp /> */}
 			<Router>
-				{/* <ResponsiveDrawer onUploadClick={onUploadClick} /> */}
+				<AppBar position="static">
+					<Toolbar>
+						<Typography>Play Music Stats</Typography>
+					</Toolbar>
+				</AppBar>
 				<Switch>
 					<Route path="/Loading">
 						<>
