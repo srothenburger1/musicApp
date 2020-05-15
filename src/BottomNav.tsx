@@ -18,7 +18,7 @@ const useStyles = makeStyles({
 
 export default function LabelBottomNavigation(props: any) {
 	const classes = useStyles();
-	const [value, setValue] = React.useState('Help');
+	const [value, setValue] = React.useState();
 	let history = useHistory();
 
 	const buildFileSelector = () => {
@@ -43,6 +43,7 @@ export default function LabelBottomNavigation(props: any) {
 		if (requestSucceeded === 0) {
 			history.push('/Songs');
 			setValue('Songs');
+			window.navigator.vibrate(200);
 		} else {
 			history.push('/BadData');
 		}
@@ -75,20 +76,28 @@ export default function LabelBottomNavigation(props: any) {
 			<BottomNavigationAction
 				label="Upload"
 				value="Upload"
+				showLabel={true}
 				icon={<CloudUploadIcon />}
 			/>
 
 			<BottomNavigationAction
 				label="Songs"
 				value="Songs"
+				showLabel={true}
 				icon={<MusicNoteIcon />}
 			/>
 			<BottomNavigationAction
 				label="Artists"
 				value="Artists"
+				showLabel={true}
 				icon={<ContactsIcon />}
 			/>
-			<BottomNavigationAction label="Help" value="Help" icon={<HelpIcon />} />
+			<BottomNavigationAction
+				label="Help"
+				value="Help"
+				showLabel={true}
+				icon={<HelpIcon />}
+			/>
 		</BottomNavigation>
 	);
 }
