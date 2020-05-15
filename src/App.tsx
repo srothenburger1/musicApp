@@ -8,6 +8,7 @@ import LoadingCircle from './LoadingCircle';
 import { ResponsiveDrawer } from './Drawers/ResponsiveDrawer';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { HelpComp } from './HelpComp';
+import LabelBottomNavigation from './BottomNav';
 
 export const App = () => {
 	const [TopSongsData, setTopSongsData] = useState(null),
@@ -57,7 +58,7 @@ export const App = () => {
 		<div className="App">
 			{/* <HelpComp /> */}
 			<Router>
-				<ResponsiveDrawer onUploadClick={onUploadClick} />
+				{/* <ResponsiveDrawer onUploadClick={onUploadClick} /> */}
 				<Switch>
 					<Route path="/Loading">
 						<>
@@ -101,6 +102,7 @@ export const App = () => {
 						<HelpComp />
 					</Route>
 				</Switch>
+				<LabelBottomNavigation onUploadClick={onUploadClick} />
 			</Router>
 		</div>
 	);

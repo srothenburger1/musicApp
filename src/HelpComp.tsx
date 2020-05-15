@@ -6,22 +6,20 @@ export const HelpComp = () => {
 			<div className="grid">
 				<section>
 					<Typography>
-						<p>
-							Nearly every interaction you have with google is stored with them
-							and you have the ability to extract and view those interactions.
-							We’re going to use such an extraction to get your listening
-							statistics. You have to go into your google account and get it.
-							Here’s how: Visit:
-							<a
-								target="_blank"
-								href="https://takeout.google.com/settings/takeout?pli=1">
-								https://takeout.google.com/settings/takeout?pli=1
-							</a>
-							. You’re going to want to create a new archive, available under
-							the heading “CREATE A NEW ARCHIVE.” You don’t want to download all
-							your activity, so the first thing you’ll want to do is hit that
-							“Deselect All” button, circled red in the screenshot below.
-						</p>
+						Nearly every interaction you have with google is stored with them
+						and you have the ability to extract and view those interactions.
+						We’re going to use such an extraction to get your listening
+						statistics. You have to go into your google account and get it.
+						Here’s how: Visit:
+						<a
+							target="_blank"
+							href="https://takeout.google.com/settings/takeout?pli=1">
+							https://takeout.google.com/settings/takeout?pli=1
+						</a>
+						. You’re going to want to create a new archive, available under the
+						heading “CREATE A NEW ARCHIVE.” You don’t want to download all your
+						activity, so the first thing you’ll want to do is hit that “Deselect
+						All” button, circled red in the screenshot below.
 					</Typography>
 				</section>
 				<img
@@ -30,12 +28,10 @@ export const HelpComp = () => {
 					}></img>
 				<section>
 					<Typography>
-						<p>
-							After you click it, all those checkboxes will change to
-							unselected. Then, scroll down until you find an option called “My
-							Activity.”Click that checkbox, circled for in red for you here.
-							(Do not bother with the “Google Play Music” option here.)
-						</p>
+						After you click it, all those checkboxes will change to unselected.
+						Then, scroll down until you find an option called “My
+						Activity.”Click that checkbox, circled for in red for you here. (Do
+						not bother with the “Google Play Music” option here.)
 					</Typography>
 				</section>
 				<img
@@ -44,10 +40,8 @@ export const HelpComp = () => {
 					}></img>
 				<section>
 					<Typography>
-						<p>
-							Once you’ve checked that, click the thing that says “All activity
-							data included”.
-						</p>
+						Once you’ve checked that, click the thing that says “All activity
+						data included”.
 					</Typography>
 				</section>
 				<img
@@ -55,9 +49,7 @@ export const HelpComp = () => {
 						'https://miro.medium.com/max/1400/1*vEFxIue9kkTVlhg5Eywy1Q.png'
 					}></img>
 				<section>
-					<Typography>
-						<p> will pop up. Click “Deselect All.”</p>
-					</Typography>
+					<Typography>will pop up. Click “Deselect All.”</Typography>
 				</section>
 				<img
 					src={
@@ -65,11 +57,9 @@ export const HelpComp = () => {
 					}></img>
 				<section>
 					<Typography>
-						<p>
-							All the checkboxes will be unselected. Then scroll down until you
-							find “Google Play Music” and check it. (This is the “Google Play
-							Music” that you want.)
-						</p>
+						All the checkboxes will be unselected. Then scroll down until you
+						find “Google Play Music” and check it. (This is the “Google Play
+						Music” that you want.)
 					</Typography>
 				</section>
 				<img
@@ -77,9 +67,7 @@ export const HelpComp = () => {
 						'https://miro.medium.com/max/1212/1*7Uye1-epKOqKYxvFkfpzmA.png'
 					}></img>
 				<section>
-					<Typography>
-						<p> the very bottom, click OK.</p>
-					</Typography>
+					<Typography>the very bottom, click OK.</Typography>
 				</section>
 				<img
 					src={
@@ -87,11 +75,9 @@ export const HelpComp = () => {
 					}></img>
 				<section>
 					<Typography>
-						<p>
-							Back under “My Activity”, the thing that used to say “All
-							Activity” should now say “1 product selected.” Next to it is a
-							button that says something like “Multiple Formats.” Click it.
-						</p>
+						Back under “My Activity”, the thing that used to say “All Activity”
+						should now say “1 product selected.” Next to it is a button that
+						says something like “Multiple Formats.” Click it.
 					</Typography>
 				</section>
 				<img
@@ -100,10 +86,8 @@ export const HelpComp = () => {
 					}></img>
 				<section>
 					<Typography>
-						<p>
-							In the popup that appears, next to Activity Records, there is a
-							dropdown that probably says, “HTML”. Click it.
-						</p>
+						In the popup that appears, next to Activity Records, there is a
+						dropdown that probably says, “HTML”. Click it.
 					</Typography>
 				</section>
 				<img
@@ -111,18 +95,14 @@ export const HelpComp = () => {
 						'https://miro.medium.com/max/1400/1*qOc58qD3x4Cji_KqB1f0_g.png'
 					}></img>
 				<section>
-					<Typography>
-						<p> “JSON.”</p>
-					</Typography>
+					<Typography>“JSON.”</Typography>
 				</section>
 				<img
 					src={
 						'https://miro.medium.com/max/1364/1*5aCrGs5seEqiHXFj4ddSKw.png'
 					}></img>
 				<section>
-					<Typography>
-						<p> “OK.”</p>
-					</Typography>
+					<Typography>“OK.”</Typography>
 				</section>
 				<img
 					src={
@@ -130,7 +110,7 @@ export const HelpComp = () => {
 					}></img>
 				<section>
 					<Typography>
-						<p>It should now look like something similar to this.</p>
+						It should now look like something similar to this.
 					</Typography>
 				</section>
 				<img
@@ -139,7 +119,7 @@ export const HelpComp = () => {
 					}></img>
 				<section>
 					<Typography>
-						<p>Now, scroll to the bottom of the page and click “Next step.”</p>
+						Now, scroll to the bottom of the page and click “Next step.”
 					</Typography>
 				</section>
 				<img
@@ -148,13 +128,11 @@ export const HelpComp = () => {
 					}></img>
 				<section>
 					<Typography>
-						<p>
-							Then you’ll see something like this. Select the options that make
-							sense to you. Sending download link via email and using a zip file
-							are probably easiest. These are the default options. If you listen
-							a lot (and I mean a TON), maybe increase the archive size so that
-							it’s not split up. Then, click “Create archive.”
-						</p>
+						Then you’ll see something like this. Select the options that make
+						sense to you. Sending download link via email and using a zip file
+						are probably easiest. These are the default options. If you listen a
+						lot (and I mean a TON), maybe increase the archive size so that it’s
+						not split up. Then, click “Create archive.”
 					</Typography>
 				</section>
 				<img
@@ -162,9 +140,7 @@ export const HelpComp = () => {
 						'https://miro.medium.com/max/1400/1*hpfFKZINGic8r-ZPx7VuuA.png'
 					}></img>
 				<section>
-					<Typography>
-						<p> get something like this.</p>
-					</Typography>
+					<Typography>get something like this.</Typography>
 				</section>
 				<img
 					src={
@@ -172,12 +148,9 @@ export const HelpComp = () => {
 					}></img>
 				<section>
 					<Typography>
-						<p>
-							Now you have to wait. I did it twice this year — one time it took
-							an hour, the other time it took a minute. I don’t know how long
-							it’ll take for you. When it does finish, you’ll get an email like
-							this:
-						</p>
+						Now you have to wait. I did it twice this year — one time it took an
+						hour, the other time it took a minute. I don’t know how long it’ll
+						take for you. When it does finish, you’ll get an email like this:
 					</Typography>
 				</section>
 				<img
@@ -186,14 +159,12 @@ export const HelpComp = () => {
 					}></img>
 				<section>
 					<Typography>
-						<p>
-							Click that blue Download archive button. It’ll probably have you
-							log in, for security purposes. After you enter your password, the
-							download will happen automatically. If you downloaded a zip file,
-							and if you’re on OSX, when you double-click it, it’ll create a
-							directory called Takeout, and if you expand that directory, you’ll
-							see this.
-						</p>
+						Click that blue Download archive button. It’ll probably have you log
+						in, for security purposes. After you enter your password, the
+						download will happen automatically. If you downloaded a zip file,
+						and if you’re on OSX, when you double-click it, it’ll create a
+						directory called Takeout, and if you expand that directory, you’ll
+						see this.
 					</Typography>
 				</section>
 				<img
@@ -202,10 +173,8 @@ export const HelpComp = () => {
 					}></img>
 				<section>
 					<Typography>
-						<p>
-							It is that file right there -MyActivity.json — which is what you
-							want.
-						</p>
+						It is that file right there -MyActivity.json — which is what you
+						want.
 					</Typography>
 				</section>
 			</div>
