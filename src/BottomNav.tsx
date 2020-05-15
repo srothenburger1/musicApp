@@ -19,60 +19,74 @@ const useStyles = makeStyles({
 	},
 });
 
+function buildFileSelector() {
+	const fileSelector = document.createElement('input');
+	fileSelector.setAttribute('type', 'file');
+	fileSelector.setAttribute('multiple', 'multiple');
+	return fileSelector;
+}
+
 export default function LabelBottomNavigation(props: any) {
 	const classes = useStyles();
 	const [value, setValue] = React.useState('Help');
 	let history = useHistory();
 
 	const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
-		// if (newValue === 'Upload') {
-		// 	handleInput(event);
-		// }
-		history.push(`/${newValue}`);
-		setValue(newValue);
+		if (newValue === 'Upload') {
+			handleFileSelect(event);
+		} else {
+			history.push(`/${newValue}`);
+			setValue(newValue);
+		}
 	};
 
 	//TODO: make a useeffect to set the route to help
 
-	const handleInput = async (e: React.ChangeEvent<{}>) => {
-		history.push('/Loading');
-		const requestSucceeded = await props.onUploadClick(e);
+	// const handleInput = async (e: React.ChangeEvent<{}>) => {
+	// 	history.push('/Loading');
+	// 	console.log(e);
+	// 	const requestSucceeded = await props.onUploadClick(e);
 
-		if (requestSucceeded === 0) {
-			history.push('/Data/Songs');
-		} else {
-			history.push('/BadData');
-		}
+	// 	if (requestSucceeded === 0) {
+	// 		history.push('/Data/Songs');
+	// 	} else {
+	// 		history.push('/BadData');
+	// 	}
+	// };
+
+	const fileSelector = buildFileSelector();
+	const handleFileSelect = (e: any) => {
+		e.preventDefault();
+		fileSelector.click();
 	};
 
 	return (
 		<>
-			<input
+			{/* <input
 				accept="JSON/*"
 				id="contained-button-file1"
 				multiple
 				type="File"
 				onChange={handleInput}
 				style={{ display: 'none' }}
-			/>
+			/> */}
 			<BottomNavigation
 				value={value}
 				onChange={handleChange}
 				className={classes.stickToBottom}>
-				{/* <FilePicker
-					extensions={['json']}
-					onChange={(e: any) => handleInput(e)}
-					onError={(e: Error) => console.log(e)}> */}
+				{/* <label key="upload" htmlFor="contained-button-file1"> */}
+				{/* <div> */}
 				<BottomNavigationAction
 					label="Upload"
 					value="Upload"
 					icon={
-						<label key="upload" htmlFor="contained-button-file1">
-							<CloudUploadIcon />
-						</label>
+						// <label key="upload" htmlFor="contained-button-file1">
+						<CloudUploadIcon />
+						// </label>
 					}
 				/>
-				{/* </FilePicker> */}
+				{/* </div>
+				</label> */}
 
 				<BottomNavigationAction
 					label="Songs"

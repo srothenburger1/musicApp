@@ -70,7 +70,7 @@ export const App = () => {
 							<LoadingCircle />
 						</>
 					</Route>
-					<Route path="/Data/Artists">
+					<Route path="/Artists">
 						{TopArtistsData !== null ? (
 							<>
 								<div style={{ paddingTop: '4rem' }}>
@@ -83,7 +83,7 @@ export const App = () => {
 							</>
 						) : null}
 					</Route>
-					<Route path="/Data/Songs">
+					<Route path="/Songs">
 						{AllSongsCount !== '0' ? (
 							<>
 								<div style={{ paddingTop: '4rem' }}>
