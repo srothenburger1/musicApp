@@ -55,8 +55,8 @@ export const App = () => {
 
 	return (
 		<div className="App">
-			<HelpComp />
-			{/* <Router>
+			{/* <HelpComp /> */}
+			<Router>
 				<ResponsiveDrawer onUploadClick={onUploadClick} />
 				<Switch>
 					<Route path="/Loading">
@@ -96,8 +96,12 @@ export const App = () => {
 						) : null}
 					</Route>
 					<Route path="/Login"></Route>
+					<Route path="/Help">
+						{' '}
+						<HelpComp />
+					</Route>
 				</Switch>
-			</Router> */}
+			</Router>
 		</div>
 	);
 };

@@ -13,6 +13,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import ContactsIcon from '@material-ui/icons/Contacts';
+import HelpIcon from '@material-ui/icons/Help';
 import MusicNoteIcon from '@material-ui/icons/MusicNote';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -108,7 +109,13 @@ export const ResponsiveDrawer = (props: {
 						</ListItem>
 					</Link>
 				))}
-				<GoogleBtn />
+				<Link to="/Help" style={{ textDecoration: 'none', color: 'inherit' }}>
+					<ListItem button key={'Help'}>
+						<ListItemIcon>{<HelpIcon />}</ListItemIcon>
+						<ListItemText primary="Help" />
+					</ListItem>
+				</Link>
+				{/* <GoogleBtn /> */}
 			</List>
 		</div>
 	);
