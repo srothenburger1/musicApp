@@ -5,7 +5,6 @@ import { SongsTable } from './Tables/SongsTable';
 import { ArtistTable } from './Tables/ArtistTable';
 import { CountsTable } from './Tables/CountsTable';
 import LoadingCircle from './LoadingCircle';
-import { ResponsiveDrawer } from './Drawers/ResponsiveDrawer';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { HelpComp } from './HelpComp';
 import LabelBottomNavigation from './BottomNav';
@@ -62,11 +61,6 @@ export const App = () => {
 				<Switch>
 					<Route path="/Loading">
 						<>
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
 							<LoadingCircle />
 						</>
 					</Route>

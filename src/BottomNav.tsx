@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
@@ -7,9 +7,6 @@ import HelpIcon from '@material-ui/icons/Help';
 import MusicNoteIcon from '@material-ui/icons/MusicNote';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import { useHistory } from 'react-router-dom';
-//@ts-ignore
-import { FilePicker } from 'react-file-picker';
-import { useFilePicker } from 'react-sage';
 
 const useStyles = makeStyles({
 	stickToBottom: {
@@ -19,19 +16,39 @@ const useStyles = makeStyles({
 	},
 });
 
-function buildFileSelector() {
-	const fileSelector = document.createElement('input');
-	fileSelector.setAttribute('type', 'file');
-	fileSelector.setAttribute('multiple', 'multiple');
-	return fileSelector;
-}
-
 export default function LabelBottomNavigation(props: any) {
 	const classes = useStyles();
 	const [value, setValue] = React.useState('Help');
 	let history = useHistory();
 
-	const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
+	const buildFileSelector = () => {
+		const fileSelector = document.createElement('input');
+		fileSelector.setAttribute('type', 'file');
+		fileSelector.setAttribute('multiple', 'multiple');
+		fileSelector.setAttribute('accept', 'JSON/*');
+		fileSelector.onchange = handleFileInput;
+
+		return fileSelector;
+	};
+
+	const handleFileSelect = (e: any) => {
+		e.preventDefault();
+		buildFileSelector().click();
+	};
+
+	const handleFileInput = async (e: any) => {
+		history.push('/Loading');
+		const requestSucceeded = await props.onUploadClick(e);
+
+		if (requestSucceeded === 0) {
+			history.push('/Songs');
+			setValue('Songs');
+		} else {
+			history.push('/BadData');
+		}
+	};
+
+	const handleNavClick = (event: React.ChangeEvent<{}>, newValue: string) => {
 		if (newValue === 'Upload') {
 			handleFileSelect(event);
 		} else {
@@ -40,66 +57,38 @@ export default function LabelBottomNavigation(props: any) {
 		}
 	};
 
-	//TODO: make a useeffect to set the route to help
-
-	// const handleInput = async (e: React.ChangeEvent<{}>) => {
-	// 	history.push('/Loading');
-	// 	console.log(e);
-	// 	const requestSucceeded = await props.onUploadClick(e);
-
-	// 	if (requestSucceeded === 0) {
-	// 		history.push('/Data/Songs');
-	// 	} else {
-	// 		history.push('/BadData');
-	// 	}
-	// };
-
-	const fileSelector = buildFileSelector();
-	const handleFileSelect = (e: any) => {
-		e.preventDefault();
-		fileSelector.click();
-	};
+	useEffect(() => {
+		if (localStorage.getItem('musicData')) {
+			history.push('/Songs');
+			setValue('Songs');
+		} else {
+			history.push('/Help');
+			setValue('Help');
+		}
+	}, []);
 
 	return (
-		<>
-			{/* <input
-				accept="JSON/*"
-				id="contained-button-file1"
-				multiple
-				type="File"
-				onChange={handleInput}
-				style={{ display: 'none' }}
-			/> */}
-			<BottomNavigation
-				value={value}
-				onChange={handleChange}
-				className={classes.stickToBottom}>
-				{/* <label key="upload" htmlFor="contained-button-file1"> */}
-				{/* <div> */}
-				<BottomNavigationAction
-					label="Upload"
-					value="Upload"
-					icon={
-						// <label key="upload" htmlFor="contained-button-file1">
-						<CloudUploadIcon />
-						// </label>
-					}
-				/>
-				{/* </div>
-				</label> */}
+		<BottomNavigation
+			value={value}
+			onChange={handleNavClick}
+			className={classes.stickToBottom}>
+			<BottomNavigationAction
+				label="Upload"
+				value="Upload"
+				icon={<CloudUploadIcon />}
+			/>
 
-				<BottomNavigationAction
-					label="Songs"
-					value="Songs"
-					icon={<MusicNoteIcon />}
-				/>
-				<BottomNavigationAction
-					label="Artists"
-					value="Artists"
-					icon={<ContactsIcon />}
-				/>
-				<BottomNavigationAction label="Help" value="Help" icon={<HelpIcon />} />
-			</BottomNavigation>
-		</>
+			<BottomNavigationAction
+				label="Songs"
+				value="Songs"
+				icon={<MusicNoteIcon />}
+			/>
+			<BottomNavigationAction
+				label="Artists"
+				value="Artists"
+				icon={<ContactsIcon />}
+			/>
+			<BottomNavigationAction label="Help" value="Help" icon={<HelpIcon />} />
+		</BottomNavigation>
 	);
 }
