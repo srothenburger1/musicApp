@@ -18,7 +18,7 @@ const useStyles = makeStyles({
 
 export default function LabelBottomNavigation(props: any) {
 	const classes = useStyles();
-	const [value, setValue] = React.useState();
+	const [value, setValue] = React.useState<string>();
 	let history = useHistory();
 
 	const buildFileSelector = () => {
@@ -66,7 +66,7 @@ export default function LabelBottomNavigation(props: any) {
 			history.push('/Help');
 			setValue('Help');
 		}
-	}, []);
+	}, [history]);
 
 	return (
 		<BottomNavigation

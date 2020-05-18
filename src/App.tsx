@@ -58,51 +58,58 @@ export const App = () => {
 
 	return (
 		<div className="App">
-			<Router>
+			<section>
 				<AppBar position="static">
 					<Toolbar>
 						<Typography>Play Music Stats</Typography>
 					</Toolbar>
 				</AppBar>
+			</section>
+			<Router>
 				<Switch>
 					<Route path="/Loading">
-						<>
-							<LoadingCircle />
-						</>
+						<LoadingCircle />
 					</Route>
 					<Route path="/Artists">
 						{TopArtistsData !== null ? (
 							<>
-								<div style={{ paddingTop: '4rem' }}>
+								<section className="table">
 									<CountsTable
 										songCount={AllSongsCount!}
 										artistCount={AllArtistsCount!}
 									/>
-								</div>
-								<ArtistTable data={TopArtistsData!} />
+								</section>
+								<section>
+									<ArtistTable data={TopArtistsData!} />
+								</section>
 							</>
 						) : null}
 					</Route>
 					<Route path="/Songs">
 						{AllSongsCount !== '0' ? (
 							<>
-								<div style={{ paddingTop: '4rem' }}>
+								<section className="table">
 									<CountsTable
 										songCount={AllSongsCount!}
 										artistCount={AllArtistsCount!}
 									/>
-								</div>
-								<SongsTable data={TopSongsData!} />{' '}
+								</section>
+								<section>
+									<SongsTable data={TopSongsData!} />
+								</section>
 							</>
 						) : null}
 					</Route>
-					<Route path="/Login"></Route>
 					<Route path="/Help">
-						{' '}
-						<HelpComp />
+						<section>
+							<HelpComp />
+						</section>
 					</Route>
 				</Switch>
-				<LabelBottomNavigation onUploadClick={onUploadClick} />
+				{/* Nav Bar */}
+				<section>
+					<LabelBottomNavigation onUploadClick={onUploadClick} />
+				</section>
 			</Router>
 		</div>
 	);

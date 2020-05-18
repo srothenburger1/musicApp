@@ -13,6 +13,7 @@ export const HelpComp = () => {
 						Here’s how: Visit:
 						<a
 							target="_blank"
+							rel="noopener noreferrer"
 							href="https://takeout.google.com/settings/takeout?pli=1">
 							https://takeout.google.com/settings/takeout?pli=1
 						</a>
@@ -23,6 +24,7 @@ export const HelpComp = () => {
 					</Typography>
 				</section>
 				<img
+					alt="Instructional screenshot"
 					src={
 						'https://miro.medium.com/max/1400/1*nfL2xPv-MfU8UDl1P7GXLA.png'
 					}></img>
@@ -35,6 +37,7 @@ export const HelpComp = () => {
 					</Typography>
 				</section>
 				<img
+					alt="Instructional screenshot"
 					src={
 						'https://miro.medium.com/max/1400/1*FrjKzQac2b58Q-ed4YfzPg.png'
 					}></img>
@@ -45,6 +48,7 @@ export const HelpComp = () => {
 					</Typography>
 				</section>
 				<img
+					alt="Instructional screenshot"
 					src={
 						'https://miro.medium.com/max/1400/1*vEFxIue9kkTVlhg5Eywy1Q.png'
 					}></img>
@@ -52,6 +56,7 @@ export const HelpComp = () => {
 					<Typography>will pop up. Click “Deselect All.”</Typography>
 				</section>
 				<img
+					alt="Instructional screenshot"
 					src={
 						'https://miro.medium.com/max/1360/1*VmDGEz-YWExekVjXdiVLpg.png'
 					}></img>
@@ -63,6 +68,7 @@ export const HelpComp = () => {
 					</Typography>
 				</section>
 				<img
+					alt="Instructional screenshot"
 					src={
 						'https://miro.medium.com/max/1212/1*7Uye1-epKOqKYxvFkfpzmA.png'
 					}></img>
@@ -70,6 +76,7 @@ export const HelpComp = () => {
 					<Typography>the very bottom, click OK.</Typography>
 				</section>
 				<img
+					alt="Instructional screenshot"
 					src={
 						'https://miro.medium.com/max/1336/1*EpCwVZ-I9PanRGgtcc_zJQ.png'
 					}></img>
@@ -81,6 +88,7 @@ export const HelpComp = () => {
 					</Typography>
 				</section>
 				<img
+					alt="Instructional screenshot"
 					src={
 						'https://miro.medium.com/max/1400/1*jtwZAn8erZsJ65sRPQmfrw.png'
 					}></img>
@@ -91,6 +99,7 @@ export const HelpComp = () => {
 					</Typography>
 				</section>
 				<img
+					alt="Instructional screenshot"
 					src={
 						'https://miro.medium.com/max/1400/1*qOc58qD3x4Cji_KqB1f0_g.png'
 					}></img>
@@ -98,6 +107,7 @@ export const HelpComp = () => {
 					<Typography>“JSON.”</Typography>
 				</section>
 				<img
+					alt="Instructional screenshot"
 					src={
 						'https://miro.medium.com/max/1364/1*5aCrGs5seEqiHXFj4ddSKw.png'
 					}></img>
@@ -105,6 +115,7 @@ export const HelpComp = () => {
 					<Typography>“OK.”</Typography>
 				</section>
 				<img
+					alt="Instructional screenshot"
 					src={
 						'https://miro.medium.com/max/1400/1*e9XsbZ-LnE5t53NM7MoC5Q.png'
 					}></img>
@@ -114,6 +125,7 @@ export const HelpComp = () => {
 					</Typography>
 				</section>
 				<img
+					alt="Instructional screenshot"
 					src={
 						'https://miro.medium.com/max/1400/1*Rho1TIL0iHkNw6CUda_srA.png'
 					}></img>
@@ -123,6 +135,7 @@ export const HelpComp = () => {
 					</Typography>
 				</section>
 				<img
+					alt="Instructional screenshot"
 					src={
 						'https://miro.medium.com/max/1400/1*AXngbgtqjSatAm_efYQPfg.png'
 					}></img>
@@ -136,6 +149,7 @@ export const HelpComp = () => {
 					</Typography>
 				</section>
 				<img
+					alt="Instructional screenshot"
 					src={
 						'https://miro.medium.com/max/1400/1*hpfFKZINGic8r-ZPx7VuuA.png'
 					}></img>
@@ -143,6 +157,7 @@ export const HelpComp = () => {
 					<Typography>get something like this.</Typography>
 				</section>
 				<img
+					alt="Instructional screenshot"
 					src={
 						'https://miro.medium.com/max/1400/1*Pxs4pMt_QuYxaHEnYeqYgQ.png'
 					}></img>
@@ -154,6 +169,7 @@ export const HelpComp = () => {
 					</Typography>
 				</section>
 				<img
+					alt="Instructional screenshot"
 					src={
 						'https://miro.medium.com/max/1400/1*iVO2_cQuRy12jXPzvRQVWg.png'
 					}></img>
@@ -168,6 +184,7 @@ export const HelpComp = () => {
 					</Typography>
 				</section>
 				<img
+					alt="Instructional screenshot"
 					src={
 						'https://miro.medium.com/max/1176/1*r6bZ66xtjtW4Qr5QvAucQw.png'
 					}></img>
