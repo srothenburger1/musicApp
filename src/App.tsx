@@ -13,10 +13,14 @@ import { HelpComp } from './HelpComp';
 import LabelBottomNavigation from './BottomNav';
 
 export const App = () => {
+	const today = new Date();
 	const [TopSongsData, setTopSongsData] = useState(null),
 		[TopArtistsData, setTopArtistsData] = useState(null),
 		[AllSongsCount, setAllSongsCount] = useState('0'),
-		[AllArtistsCount, setAllArtistsCount] = useState('0');
+		[AllArtistsCount, setAllArtistsCount] = useState('0'),
+		[ThisYear, ThisYearSet] = useState<number>(
+			today.getMonth() < 11 ? today.getFullYear() - 1 : today.getFullYear()
+		);
 
 	useEffect(() => {
 		if (localStorage.getItem('musicData')) {
@@ -59,7 +63,7 @@ export const App = () => {
 			<section>
 				<AppBar position="static">
 					<Toolbar>
-						<Typography>Play Music Stats</Typography>
+						<Typography>{ThisYear} Music Stats</Typography>
 					</Toolbar>
 				</AppBar>
 			</section>
