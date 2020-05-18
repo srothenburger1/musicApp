@@ -30,7 +30,6 @@ export const App = () => {
 
 	const onUploadClick = async (event: any) => {
 		let formData = new FormData();
-		formData.append('year', '2019');
 		formData.append('path', event.target.files[0]);
 
 		const result = await axios.post(
