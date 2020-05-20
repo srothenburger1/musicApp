@@ -1,4 +1,4 @@
-<h1 align="center">Welcome to music-stats 👋</h1>
+<h1 align="center">Music-stats 👋</h1>
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
   <img src="https://img.shields.io/badge/npm-6.14.4-blue.svg" />
