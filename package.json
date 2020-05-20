@@ -1,6 +1,6 @@
 {
 	"name": "music-stats",
-	"version": "0.1.0",
+	"version": "1.0.0",
 	"private": true,
 	"description": "An app that analyzes google play music habits.",
 	"author": "Steven Rothenburger",
