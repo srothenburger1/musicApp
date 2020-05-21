@@ -59,7 +59,7 @@ export default function LabelBottomNavigation(props: any) {
 	};
 
 	useEffect(() => {
-		if (localStorage.getItem('musicData')) {
+		if (sessionStorage.getItem('musicData')) {
 			history.push('/Songs');
 			setValue('Songs');
 		} else {

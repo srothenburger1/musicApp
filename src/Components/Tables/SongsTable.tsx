@@ -7,9 +7,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import Song from '../Interfaces/Song';
-import { SongInput } from '../Interfaces/DataInputs';
-import '../index.css';
+import { SongInput, Song } from '../../Interfaces/Types';
+import '../../index.css';
 
 const useStyles = makeStyles({
 	table: {
@@ -22,7 +21,7 @@ const useStyles = makeStyles({
 function createSongData(
 	title: string,
 	artist: string,
-	numberOfListens: string
+	numberOfListens: number
 ): Song {
 	return { title, artist, numberOfListens };
 }
@@ -31,7 +30,7 @@ const SongsTable = ({ data }: SongInput) => {
 	const classes = useStyles();
 	const songs: Array<Song> = [];
 
-	data.forEach((item: string[]) => {
+	data?.forEach((item: [string, string, number]) => {
 		songs.push(createSongData(item[0], item[1], item[2]));
 	});
 

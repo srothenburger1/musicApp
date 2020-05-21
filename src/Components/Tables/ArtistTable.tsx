@@ -7,41 +7,50 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import Counts from '../Interfaces/Counts';
+import { ArtistInput, Artist } from '../../Interfaces/Types';
 
 const useStyles = makeStyles({
 	table: {
 		minWidth: '35vw',
+		maxWidth: 650,
 	},
 });
 
-const CountsTable = (counts: Counts) => {
-	const classes: Record<'table', string> = useStyles();
+function createArtistData(name: string, numberOfListens: number): Artist {
+	return { name, numberOfListens };
+}
 
+const ArtistTable = ({ data }: ArtistInput) => {
+	const classes: Record<'table', string> = useStyles();
+	const artists: Array<Artist> = [];
+
+	data?.forEach((item: [string, number]) => {
+		artists.push(createArtistData(item[0], item[1]));
+	});
 	return (
 		<div className="customTable">
 			<TableContainer component={Paper} style={{ margin: 'auto' }}>
-				<Table
-					className={classes.table}
-					size="small"
-					aria-label="a dense table">
+				<Table className={classes.table} aria-label="simple table">
 					<TableHead>
 						<TableRow>
-							<TableCell>Total different songs</TableCell>
-							<TableCell align="right">Total different artists</TableCell>
+							<TableCell>Artist</TableCell>
+							<TableCell align="right">Listens</TableCell>
 						</TableRow>
 					</TableHead>
 					<TableBody>
-						<TableRow key={'Counts'}>
-							<TableCell component="th" scope="row">
-								{counts.songCount}
-							</TableCell>
-							<TableCell align="right">{counts.artistCount}</TableCell>
-						</TableRow>
+						{artists.map((artist: Artist) => (
+							<TableRow key={artist.name}>
+								<TableCell component="th" scope="row">
+									{artist.name}
+								</TableCell>
+								<TableCell align="right">{artist.numberOfListens}</TableCell>
+							</TableRow>
+						))}
 					</TableBody>
 				</Table>
 			</TableContainer>
 		</div>
 	);
 };
-export { CountsTable };
+
+export { ArtistTable };
