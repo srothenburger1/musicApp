@@ -7,7 +7,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { ArtistInput, Artist } from '../../Interfaces/Types';
+import { Artist } from '../../Interfaces/Types';
 
 const useStyles = makeStyles({
 	table: {
@@ -16,16 +16,19 @@ const useStyles = makeStyles({
 	},
 });
 
+type ArtistDataEntry = { artist: string; numberOfListens: number };
+type ArtistData = Array<ArtistDataEntry>;
+
 function createArtistData(name: string, numberOfListens: number): Artist {
 	return { name, numberOfListens };
 }
 
-const ArtistTable = ({ data }: ArtistInput) => {
+export const ArtistTable = ({ data }: { data: ArtistData }) => {
 	const classes: Record<'table', string> = useStyles();
 	const artists: Array<Artist> = [];
 
-	data?.forEach((item: [string, number]) => {
-		artists.push(createArtistData(item[0], item[1]));
+	data?.forEach((item: ArtistDataEntry) => {
+		artists.push(createArtistData(item.artist, item.numberOfListens));
 	});
 	return (
 		<div className="customTable">
@@ -52,5 +55,3 @@ const ArtistTable = ({ data }: ArtistInput) => {
 		</div>
 	);
 };
-
-export { ArtistTable };

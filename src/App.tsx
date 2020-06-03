@@ -11,35 +11,36 @@ import AppBar from '@material-ui/core/AppBar';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { HelpComp } from './Components/HelpComp';
 import LabelBottomNavigation from './Components/Nav/BottomNav';
-import { SongData } from './Interfaces/Types';
+import { UserActivities } from './Interfaces/Types';
 
 export const App = () => {
 	const today = new Date(),
 		targetYear =
 			today.getMonth() < 11 ? today.getFullYear() - 1 : today.getFullYear(),
-		[songData, songDataSet] = useState<SongData>(),
-		onUploadClick = async (event: any) => {
-			let formData = new FormData();
-			formData.append('path', event.target.files[0]);
+		[songData, songDataSet] = useState<UserActivities>();
 
-			const result: AxiosResponse<SongData> = await axios.post(
-				' https://mighty-taiga-81224.herokuapp.com/upload',
-				formData,
-				{}
-			);
-			try {
-				songDataSet(result.data);
-				sessionStorage.clear();
-				sessionStorage.setItem('musicData', JSON.stringify(result.data));
-			} catch (error) {
-				console.log(error);
-			}
-			if (result) {
-				return 0;
-			} else {
-				return 1;
-			}
-		};
+	const onUploadClick = async (event: any) => {
+		let formData = new FormData();
+		formData.append('path', event.target.files[0]);
+
+		const result: AxiosResponse<UserActivities> = await axios.post(
+			' https://mighty-taiga-81224.herokuapp.com/upload',
+			formData,
+			{}
+		);
+		try {
+			songDataSet(result.data);
+			sessionStorage.clear();
+			sessionStorage.setItem('musicData', JSON.stringify(result.data));
+		} catch (error) {
+			console.log(error);
+		}
+		if (result) {
+			return 0;
+		} else {
+			return 1;
+		}
+	};
 	useEffect(() => {
 		if (sessionStorage.getItem('musicData')) {
 			const data = JSON.parse(sessionStorage.getItem('musicData') as string);
@@ -61,31 +62,31 @@ export const App = () => {
 						<LoadingCircle />
 					</Route>
 					<Route path="/Artists">
-						{songData != null && songData.totalArtists !== 0 ? (
+						{songData != null && songData.artistCount !== 0 ? (
 							<>
 								<section className="table">
 									<CountsTable
-										songCount={songData?.totalTitles}
-										artistCount={songData?.totalArtists}
+										songCount={songData?.songCount}
+										artistCount={songData?.artistCount}
 									/>
 								</section>
 								<section>
-									<ArtistTable data={songData?.artistsSorted} />
+									<ArtistTable data={songData?.artists} />
 								</section>
 							</>
 						) : null}
 					</Route>
 					<Route path="/Songs">
-						{songData != null && songData.totalTitles !== 0 ? (
+						{songData != null && songData.songCount !== 0 ? (
 							<>
 								<section className="table">
 									<CountsTable
-										songCount={songData?.totalTitles}
-										artistCount={songData?.totalArtists}
+										songCount={songData?.songCount}
+										artistCount={songData?.artistCount}
 									/>
 								</section>
 								<section>
-									<SongsTable data={songData?.titlesSorted} />
+									<SongsTable data={songData?.songs} />
 								</section>
 							</>
 						) : null}

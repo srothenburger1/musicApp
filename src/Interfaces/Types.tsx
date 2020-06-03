@@ -1,5 +1,11 @@
 export interface SongInput {
-	data: [string, string, number][] | undefined;
+	songs: [
+		{
+			title: string;
+			artist: string;
+			numberOfListens: number;
+		}
+	];
 }
 
 export interface ArtistInput {
@@ -25,4 +31,21 @@ export interface Song {
 	title: string;
 	artist: string;
 	numberOfListens: number;
+}
+export interface UserActivities {
+	readonly artistCount: number;
+	readonly songCount: number;
+	readonly songs: [
+		{
+			title: string;
+			artist: string;
+			numberOfListens: number;
+		}
+	];
+	readonly artists: [
+		{
+			artist: string;
+			numberOfListens: number;
+		}
+	];
 }
