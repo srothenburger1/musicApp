@@ -1,6 +1,7 @@
+//@ts-nocheck
+
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import axios, { AxiosResponse } from 'axios';
 import { SongsTable } from './Components/Tables/SongsTable';
 import { ArtistTable } from './Components/Tables/ArtistTable';
 import { CountsTable } from './Components/Tables/CountsTable';
@@ -12,6 +13,8 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { HelpComp } from './Components/HelpComp';
 import LabelBottomNavigation from './Components/Nav/BottomNav';
 import { UserActivities } from './Interfaces/Types';
+import { sortYTData } from './Services/YTMusicService';
+import { sortMusicData } from './Services/MusicStatsService';
 
 export const App = () => {
 	const today = new Date(),
@@ -20,22 +23,21 @@ export const App = () => {
 		[songData, songDataSet] = useState<UserActivities>();
 
 	const onUploadClick = async (event: any) => {
-		let formData = new FormData();
-		formData.append('path', event.target.files[0]);
+		const file = await event.target.files[0].text();
 
-		const result: AxiosResponse<UserActivities> = await axios.post(
-			' https://mighty-taiga-81224.herokuapp.com/upload',
-			formData,
-			{}
-		);
+		const musicData = file.includes('YouTube Music')
+			? sortYTData({ file: file, year: 2020 })
+			: sortMusicData({ file: file, year: 2020 });
+
 		try {
-			songDataSet(result.data);
+			songDataSet(musicData);
 			sessionStorage.clear();
-			sessionStorage.setItem('musicData', JSON.stringify(result.data));
+			sessionStorage.setItem('musicData', JSON.stringify(musicData));
 		} catch (error) {
 			console.log(error);
 		}
-		if (result) {
+
+		if (songData?.songCount > 0) {
 			return 0;
 		} else {
 			return 1;
