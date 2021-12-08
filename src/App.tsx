@@ -26,8 +26,8 @@ export const App = () => {
 		const file = await event.target.files[0].text();
 
 		const musicData = file.includes('YouTube Music')
-			? sortYTData({ file: file, year: 2020 })
-			: sortMusicData({ file: file, year: 2020 });
+			? sortYTData({ file: file, year: 2021 })
+			: sortMusicData({ file: file, year: 2021 });
 
 		try {
 			songDataSet(musicData);

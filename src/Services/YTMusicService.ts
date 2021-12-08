@@ -35,10 +35,10 @@ const countUniqueItems = (parsedFile, year) => {
 	const sortedActivity = parsedFile.reduce(
 		(acc, val) => {
 			if (
-				!val.header.includes('YouTube Music') ||
-				!val.title.includes('Watched ') ||
-				!val.subtitles ||
-				!val.time.includes(year.toString())
+				!val.header.includes('YouTube Music') 
+				|| !val.title.includes('Watched ') 
+				|| !val.subtitles 
+				|| !val.time.includes(year.toString())
 			) {
 				return acc;
 			}

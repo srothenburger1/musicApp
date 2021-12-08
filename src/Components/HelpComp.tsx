@@ -3,7 +3,51 @@ import { Typography } from '@material-ui/core';
 export const HelpComp = () => {
 	return (
 		<>
-			<div className="grid">
+
+				<Typography variant="h6">
+					UPDATE: Winter 2021
+				</Typography>
+				<Typography variant="body1">
+					Sorry everyone, this is a very quick and dirty update to get this app working again.
+				</Typography>
+
+					<div>
+						<ol>
+							<li>
+								Go to: <a
+							target="_blank"
+							rel="noopener noreferrer"
+							href="https://takeout.google.com/settings/takeout?pli=1">
+							https://takeout.google.com/settings/takeout?pli=1
+						</a>
+						</li>
+						<br />
+						<li>At the top deselect all</li>
+						<br />
+						<li>All the way at the bottom select Youtube and Youtube Music</li>
+						<br />
+						<li>Click the button that says "All Youtube data included"</li>
+						<br />
+						<li>Click deselect all, then reselect history and click OK</li>
+						<br />
+						<li>Click multiple formats, and in the row that says history, click HTML and change it to JSON. Click OK</li>
+						<br />
+						<li>Click next step</li>
+						<br />
+						<li>Click create export</li>
+						<br />
+						<li>Google will now email you the file needed.</li>
+						<br />
+						<li>In your email, download the file and unzip it</li>
+						<br />
+						<li>Click through the folders. (Takeout -{'>'} YouTube and Youtube Music -{'>'} history)</li>
+						<br />
+						<li>watch-history.json is the file you will want to upload</li>
+						</ol>
+					</div>
+
+
+			{/* <div className="grid">
 				<section>
 					<Typography>
 						Nearly every interaction you have with google is stored with them
@@ -194,7 +238,7 @@ export const HelpComp = () => {
 						want.
 					</Typography>
 				</section>
-			</div>
+			</div> */}
 		</>
 	);
 };
