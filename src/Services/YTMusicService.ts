@@ -106,8 +106,8 @@ const countUniqueItems = (parsedFile, year) => {
 	const finalTitleCount = uniqueTitles.length;
 
 	// Prune data down to top 50
-	uniqueArtists.length = uniqueArtists.length > 50 ? 50 : uniqueArtists.length;
-	uniqueTitles.length = uniqueTitles.length > 50 ? 50 : uniqueTitles.length;
+	uniqueArtists.length = uniqueArtists.length > 100 ? 100 : uniqueArtists.length;
+	uniqueTitles.length = uniqueTitles.length > 100 ? 100 : uniqueTitles.length;
 
 	return {
 		songCount: finalTitleCount,
