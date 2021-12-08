@@ -40,13 +40,16 @@ export default function LabelBottomNavigation(props: any) {
 		history.push('/Loading');
 		const requestSucceeded = await props.onUploadClick(e);
 
-		if (requestSucceeded === 0) {
+		// Had to disable error handling for now
+		// TODO: Fix this issue where requestSucceeded is undefined
+		// if (await requestSucceeded === 0) {
 			history.push('/Songs');
 			setValue('Songs');
 			window.navigator.vibrate(200);
-		} else {
-			history.push('/BadData');
-		}
+		// } 
+		// else {
+		// 	history.push('/BadData');
+		// }
 	};
 
 	const handleNavClick = (event: React.ChangeEvent<{}>, newValue: string) => {
