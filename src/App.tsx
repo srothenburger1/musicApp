@@ -10,7 +10,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import AppBar from '@material-ui/core/AppBar';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { HelpComp } from './Components/HelpComp';
+import { HelpComp } from './Components/Help/HelpComp.tsx';
 import LabelBottomNavigation from './Components/Nav/BottomNav';
 import { UserActivities } from './Interfaces/Types';
 import { sortYTData } from './Services/YTMusicService';
@@ -94,7 +94,7 @@ export const App = () => {
 						) : null}
 					</Route>
 					<Route path="/Help">
-						<section>
+						<section className='help'>
 							<HelpComp />
 						</section>
 					</Route>
