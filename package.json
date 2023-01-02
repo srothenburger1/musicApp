@@ -28,9 +28,9 @@
 		"react-google-login": "^5.1.14",
 		"react-hooks": "^1.0.1",
 		"react-router-dom": "^5.2.0",
-		"react-scripts": "3.4.1",
-		"source-map-loader": "^0.2.4",
-		"ts-loader": "^6.2.1",
+		"react-scripts": "5.0.1",
+		"source-map-loader": "^4.0.1",
+		"ts-loader": "^9.4.2",
 		"typescript": "~3.7.2"
 	},
 	"scripts": {
